@@ -1,0 +1,6 @@
+/tmp/
+__pycache__/
+# Kullanıcı tarafından verilen kaynaklar yerelde korunur.
+# Örnek föy başka bir öğrenciye ait kişisel bilgi içeriyor.
+/Lab1_Safety_Architecture.pdf
+/Lab Föyleri.pdf

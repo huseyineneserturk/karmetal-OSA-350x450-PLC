@@ -1,0 +1,116 @@
+{
+  "date": "25.10.2026",
+  "machine": "Karmetal OSA 350x450 PLC",
+  "labs": [
+    {
+      "id": 1,
+      "filename": "Lab1_Safety_Architecture.pdf",
+      "title": "Safety Architecture",
+      "output": "Safety Function Map",
+      "ep": "EP 03 - Safety Functions",
+      "source_page": 2,
+      "context": "[D] Üretici; kapak açılması, şerit kopması ve şerit basıncının azalmasında otomatik duruş bildirir [K1]. [B] Bu işlevlerin devre yapısı, Safety PLC, STO ve PL/SIL değeri doğrulanmamıştır.",
+      "sections": [
+        {"heading": "Görev - sekiz sorunun yanıtı", "qa": [
+          ["1. Tehlike nedir?", "[Ç] Hareketli şerit kesme/uzuv kaybı; mengene ve malzeme sürme hareketi sıkışma/ezilme riski doğurur. Şerit kopması, parça fırlaması ve bakımda beklenmeyen hareket de değerlendirilmelidir [K1]."],
+          ["2. Emniyet fonksiyonu hangisidir?", "[D] Kapak açılınca, şerit kopunca veya şerit basıncı düşünce otomatik duruş [K1]. [Ö] SF1: koruyucu açılınca tehlikeli hareketi durdur; SF2: şerit arızasında durdur; SF3: resetle kendiliğinden başlatma. SF3 gereksinim önerisidir."],
+          ["3. Emniyetle ilgili kumanda sistemi nerede?", "[B] Alttaki işlevsel zincirde giriş, mantık ve son eleman gösterilir; gerçek devre şeması yoktur. Switch'in sıradan PLC girişine bağlanması tek başına emniyet yeterliliğini kanıtlamaz."],
+          ["4. Normal PLC ile Safety PLC farkı nedir?", "Normal PLC üretim sırasını yönetir. Safety PLC, emniyet uygulamaları için doğrulanmış özellikler sunar; bütün zincirin uygun tasarım ve validasyonu yine gerekir. Her emniyet fonksiyonu Safety PLC kullanmak zorunda değildir [K4]."],
+          ["5. PLr / SIL neden önemlidir?", "Riskle orantılı güvenilirlik hedefidir. PLr ve SIL farklı değerlendirme çerçeveleridir. [B] Maruziyet, kaçınma imkânı, duruş süresi ve bileşen verileri yok; sayısal PLr/SIL veya sağlanmış seviye atanmamıştır [K4]."],
+          ["6. Güvenli durum nedir?", "[Ö] Şerit ve tehlikeli besleme hareketi durmuş; parça/gövde düşmesi önlenmiş; depolanmış enerji kontrol altında; yeniden başlatma yerel ve bilinçli olmalı. Tüm enerjiyi kesmek yükü düşürebilir; bakım izolasyonu ayrıca değerlendirilir."],
+          ["7. Dijital bağımlılıklar nelerdir?", "[V] Programlanabilir yapı varsa mantık programı, parametreler, firmware, mühendislik aracı ve reset/mod sinyalleri etkilidir. [B] Hangilerinin bu makinede bulunduğu bilinmiyor; kablolu röle çözümü de olasıdır."],
+          ["8. Siber müdahale nereden etkileyebilir?", "[V] Yetkisiz servis cihazı/bağlantısı -> kontrol parametresi değişikliği -> duruş isteğinin bastırılması -> kapak açıkken hareket -> yaralanma. Bu zincir yalnızca koruma değiştirilebilir ve bağımsız yol yetersizse geçerlidir; tespit edilmiş açık değildir."]
+        ]}
+      ],
+      "refs": ["K1", "K4"],
+      "note": "Doğrulama ihtiyacı: devre şeması, duruş ölçümü, reset davranışı, emniyet validasyonu."
+    },
+    {
+      "id": 2,
+      "filename": "Lab2_IEC62443_Zone_Conduit.pdf",
+      "title": "IEC 62443 Mini Workshop",
+      "output": "Zone / Conduit Diagram",
+      "ep": "EP 05 - Zone & Conduit",
+      "source_page": 3,
+      "context": "[D] PLC kontrol paneli vardır [K1]. [B] Ağ, portlar ve uzaktan erişim bilinmiyor. Aşağıdaki bölgeleme [Ö] hedef modeldir; mevcut ağın keşfi veya IEC 62443 uygunluk beyanı değildir [K3].",
+      "sections": [
+        {"heading": "Görev A - varlıklar ve bölgeler", "qa": [
+          ["1. Hangi varlıklar aynı bölgede?", "[Ö] Z0: dış servis; Z1: ofis (ERP/e-posta); Z2: OT DMZ (erişim aracısı/kayıt); Z3: bakım mühendislik istasyonu; Z4: makine PLC ve operatör paneli; Z5: emniyet işlevi. K1 yalnız PLC panelini doğrular. Diğer ağ varlıkları öneridir. Robot kontrolörü ve SCADA bu makinede doğrulanmadığı için envantere eklenmez."],
+          ["2. Safety PLC hangi bölgede, neden?", "[Ö] Varsa Z5'te; üretim/bakım yetkisi emniyet değişikliği yetkisi vermemeli. [B] Safety PLC varlığı bilinmiyor. Z5 bir işlev sınırıdır; kablolu emniyet devresi de olabilir. Sadece VLAN ayırmak emniyet bağımsızlığı sağlamaz."],
+          ["3. Conduit'ler ve kontroller nerede?", "[Ö] C1 Z0<->Z2: kimlik, MFA, süreli VPN. C2 Z2<->Z3: kişisel hesap, kayıt, hedef kısıtı. C3 Z3<->Z4: onaylı cihaz/protokol, en az yetki. C4 Z4<->Z5: yalnız doğrulanmış durum/izin sinyalleri; uzaktan emniyet yazma/reset yok. C5 Z1<->Z2: yalnız onay/kayıt iş akışı; Z1->Z4 doğrudan yasak. Protokol/port envanteri olmadan numara uydurulmaz."]
+        ]},
+        {"heading": "Görev B - uzak erişim kararı (altı satır)", "table": {
+          "widths": [0.15, 0.23, 0.62],
+          "headers": ["Karar", "Seçim [Ö]", "Gerekçe / kontrol"],
+          "rows": [
+            ["Aracı", "Jump server", "Kontrollü ara nokta; PLC'ye doğrudan internet erişimi yok."],
+            ["Tünel", "VPN", "Güncel, yönetilen şifreli tünel; yalnız gerekli hedefe erişim."],
+            ["Kimlik", "MFA", "Parola sızmasının tek başına erişim vermesini önle."],
+            ["Hesap", "Kişisel", "Servis çalışanı bazında yetki, izlenebilirlik ve iptal."],
+            ["Kayıt", "Tam oturum kaydı", "Kim/ne/zaman; bütünlük korumalı kayıt ve sınırlı erişim."],
+            ["Zamanlama", "Varsayılan kapalı", "İş emri + yerel onay + süre sonu otomatik kapatma."]
+          ]
+        }}
+      ],
+      "refs": ["K1", "K3", "K5"],
+      "note": "SL-T belirlenmedi; risk analizi ve gerçek varlık/bağlantı envanteri gereklidir."
+    },
+    {
+      "id": 3,
+      "filename": "Lab3_Threat_Risk_Matrix.pdf",
+      "title": "Threat & Risk + Risk Matrix",
+      "output": "Risk Register",
+      "ep": "EP 04 - Risk Assessment",
+      "source_page": 4,
+      "context": "Üç senaryonun tamamı [V] masa başı varsayımıdır; makinede saptanmış zafiyet değildir. Skor = L x S x E, her biri 1-3. S=3 olan tüm senaryolar skorundan bağımsız olarak öne alınır [F1].",
+      "sections": [
+        {"heading": "Puanlama - bu çalışma için operasyonel tanım", "paragraph": "L: koşullar oluşursa gerçekleşme olasılığı (1 düşük, 2 orta, 3 yüksek). S: fiziksel zarar (1 hafif, 2 ciddi, 3 kalıcı ağır yaralanma/ölüm). E: tehlikeye maruziyet (1 seyrek, 2 aralıklı, 3 sık). E yorumu föyde açılmadığı için çalışma varsayımıdır. Puanlar saha ölçümü değildir; başlangıç riski için uzmanlık dışı eğitim tahminidir."},
+        {"heading": "Üç senaryo - aktör / kapı / eylem / zincir / fiziksel sonuç", "table": {
+          "widths": [0.075, 0.56, 0.065, 0.065, 0.065, 0.08, 0.09],
+          "headers": ["ID", "Senaryo [V] ve gerekli koşul", "L", "S", "E", "Skor", "Öncelik"],
+          "rows": [
+            ["R1", "Yetkisiz kişi -> varsa servis yolu -> koruma mantığını değiştirir -> kapak açıldığında duruş olmaz -> şerit eli keser. Koşul: mantık yazılabilir ve bağımsız duruş yolu yetersiz.", "2", "3", "3", "18", "Kritik / 1"],
+            ["R2", "Zararlı yazılım taşıyan servis cihazı -> varsa bakım portu -> besleme/reset parametresini bozar -> sıkışma açılırken beklenmeyen hareket -> mengene eli ezer. Koşul: yazma erişimi ve yerel başlatma kilidi eksik.", "2", "3", "2", "12", "Yüksek / 2"],
+            ["R3", "Yetkisiz bakım kullanıcısı -> varsa yerel ayar aracı -> şerit arızası eşiğini bozar -> seyrek bakım denemesinde duruş gecikir -> kopan şerit ağır yaralar. Koşul: eşik dijital ve değiştirilebilir.", "1", "3", "1", "3", "Düşük* / 3"]
+          ]
+        }},
+        {"heading": "Görev - öncelik ve azaltma kararı", "qa": [
+          ["1. En yüksek öncelik hangisi, neden?", "R1: hem 18 ile kritik hem S=3; sık operatör maruziyetinde kapak korumasının kaybı ağır yaralanmaya gidebilir. Öncelik sırası R1 > R2 > R3; üçü de emniyet incelemesine alınır."],
+          ["2. S=3 olup skoru düşük kalan var mı?", "R3: 1 x 3 x 1 = 3. *Sayısal bant düşük olsa da S=3 bayrağıyla zorunlu emniyet incelemesi; kabul edilmiş risk değildir. Kanıt eksikliği düşük risk anlamına gelmez."]
+        ]},
+        {"heading": "Kontrol, kanıt ve takip", "paragraph": "[Ö] R1: emniyet değişiklik yetkisini ayır, bağımsız duruşu doğrula. R2: kontrollü servis cihazı, değişiklik onayı ve yerel yeniden başlatma şartı. R3: kritik ayar bütünlüğü, onaylı yedek ve validasyon. Sorumlu önerisi: işletmenin bakım + emniyet yetkilisi; öğrenci yalnız belge takibi yapar. Gerekli kanıt: devre/ayar listesi, yetki matrisi ve test raporu. Durum: üçü de açık; artık risk kontrol doğrulanmadan puanlanmaz."}
+      ],
+      "refs": ["F1", "K1", "K3", "K5"],
+      "note": "Bantlar: Kritik 18-27 | Yüksek 9-17 | Orta 4-8 | Düşük 1-3. S=3 istisnası saklıdır."
+    },
+    {
+      "id": 4,
+      "filename": "Lab4_Secure_Remote_Access.pdf",
+      "title": "Secure Remote Access",
+      "output": "Secure Architecture",
+      "ep": "EP 02 + EP 06",
+      "source_page": 5,
+      "context": "[B] Mevcut uzaktan erişim, ağ topolojisi ve emniyet devresi kamuya açık kaynaklarla doğrulanmadı. Hedef şema [Ö] kavramsal gereksinim modelidir; üreticiye ait uygulanmış tasarım değildir [K1, K5].",
+      "sections": [
+        {"heading": "Görev A - mevcut -> hedef", "table": {
+          "widths": [0.34, 0.66],
+          "headers": ["Mevcut: kanıt durumu", "Hedef: beş gereksinim [Ö]"],
+          "rows": [
+            ["Servis yolu / internet bağlantısı: bilinmiyor.", "G1 Aracı: yalnız onaylı ara nokta; PLC'ye doğrudan erişimi engelle."],
+            ["Şifreleme / kimlik doğrulama: bilinmiyor.", "G2 Tünel + kimlik: şifreli VPN ve MFA zorunlu olsun."],
+            ["Hesap ve rol politikası: bilinmiyor.", "G3 Hesap: kişisel ve göreve sınırlı yetki; ortak hesap kullanma."],
+            ["Oturum kayıtları: bilinmiyor.", "G4 İz: tam oturum kaydı, saat eşleme ve kayıt bütünlüğü sağla."],
+            ["Onay / açık kalma süresi: bilinmiyor.", "G5 Süre: varsayılan kapalı; yerel onaylı bakım penceresi sonunda kapat."]
+          ]
+        }},
+        {"heading": "Görev B - functional safety köprüsü", "qa": [
+          ["1. Saldırgan içeri girerse emniyet etkilenir mi?", "[B] Gerçek devre bilinmediğinden etkilenmez denemez. [V] Ortak yetki, program veya enerji bağımlılığı varsa etkilenebilir. [Ö] Hedefte normal PLC/bakım hesabının ele geçirilmesi kapak/şerit duruşunu devre dışı bırakamamalı; bu özellik devre incelemesi ve yetkili validasyonla gösterilmelidir."],
+          ["2. Bağımsız çalışma gereksinimi nedir?", "G6: Üretim kontrolü veya servis erişimi hatalı/kötücül davransa da koruyucu açılması ve şerit arızası tehlikeli hareketi belirlenmiş sürede durdurmalı; yük güvenle tutulmalı, duruş korunmalı ve uzaktan komut yeniden başlatamamalıdır. İletişim kaybı bu özelliği bozamamalıdır. Süre sınırı risk/duruş ölçümüyle belirlenecek; ürün/topoloji seçimi üreticiye aittir."]
+        ]},
+        {"heading": "Kabul ölçütü ve masa başı kontrolü", "paragraph": "[Ö] Geçersiz kimlik ve bakım penceresi dışındaki istek reddedilmeli; geçerli oturum yalnız izinli hedefe ulaşmalı ve kayıt üretmelidir. Erişim kesilince makine emniyeti korunmalıdır. Normal kontrolün ihlal edildiği senaryoda emniyet değişikliği/uzaktan reset engellenmelidir. Bu ölçütler henüz gerçek makinede test edilmedi; yalnız belge üzerinde değerlendirilecektir."}
+      ],
+      "refs": ["K1", "K4", "K5"],
+      "note": "Föyün tarafsızlık ilkesine uygun olarak gereksinim tanımlanır; uygulama kararı firmaya aittir."
+    }
+  ]
+}
