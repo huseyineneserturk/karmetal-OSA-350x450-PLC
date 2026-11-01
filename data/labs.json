@@ -111,6 +111,37 @@
       ],
       "refs": ["K1", "K4", "K5"],
       "note": "Föyün tarafsızlık ilkesine uygun olarak gereksinim tanımlanır; uygulama kararı firmaya aittir."
+    },
+    {
+      "id": 5,
+      "date": "01.11.2026",
+      "filename": "Lab5_SBOM_CVE_Patch.pdf",
+      "title": "SBOM / CVE / Patch",
+      "output": "Vulnerability Decision",
+      "ep": "EP 09 + EP 10 + EP 11",
+      "source_page": 6,
+      "context": "[B] Makineye özgü SBOM, PLC modeli ve firmware sürümü doğrulanmadı [K1]. [V] Föyün örnek zafiyet kaydı gerçek makine bulgusu değildir. Karar: etkilenme belirsiz; yama uygulanmaz, kanıt toplanır.",
+      "sections": [
+        {"heading": "Verilen zafiyet kaydı - yalnız eğitim senaryosu [F1]", "paragraph": "[V] Bileşen: Component X (PLC firmware kütüphanesi); sürüm: 2.4; kayıt: CVE-XXXX-XXXX (yer tutucu, gerçek CVE değil); önem: Critical / CVSS 9.8; yama: mevcut varsayılıyor. CVSS sürümü/vektörü ve yama paketi verilmemiştir. Bu bilgiler Karmetal'e atanmaz. CVSS ciddiyet puanıdır; tek başına makinenin riskini göstermez [K9]."},
+        {"heading": "Görev 1 - bu CVE gerçekten etkiliyor mu? Üç koşul", "table": {
+          "widths": [0.20, 0.22, 0.58],
+          "headers": ["Kontrol", "Sonuç", "Eksik kanıt / karar"],
+          "rows": [
+            ["Bileşen var mı?", "[B] Bilinmiyor", "Modelle eşleşen SBOM / bağımlılık listesi yok; Component X varlığı kanıtlanmadı."],
+            ["Sürüm etkileniyor mu?", "[B] Bilinmiyor", "Gerçek sürüm ve üretici güvenlik duyurusu yok; 2.4 yalnız senaryo verisi."],
+            ["Açık ulaşılabilir mi?", "[B] Bilinmiyor", "Arayüz, yetki ve tetiklenme koşulları doğrulanmadı; internet erişimi tek ölçüt değil."]
+          ]
+        }},
+        {"heading": "Görev 2-5 - karar akışı", "qa": [
+          ["2. Üretimi hemen durdurur musunuz?", "[Ö] Yalnız 9.8 puanı/yer tutucu nedeniyle otomatik duruş kararı verilmez. Bu, üretime devam onayı değildir. Emniyet kaybı, yetkisiz değişiklik veya beklenmeyen hareket belirtisinde yetkili işletme ekibi kontrollü güvenli duruşa geçer; kayıtları korur ve servis yolunu sınırlar."],
+          ["3. Yamayı doğrudan mı, önce test ederek mi uygularsınız? Nerede?", "[Ö] Önce üretimden ayrılmış, aynı donanım/sürümü temsil eden yetkili test düzeneğinde. Üreticinin paket kaynağı ve bütünlüğü, uyumluluk, yedek/geri dönüş ve regresyon sonuçları doğrulanır. Temsilî düzenek yoksa başarı varsayılmaz; üretime körlemesine yüklenmez. Bu projede yama testi/kurulumu yapılmadı [K5]."],
+          ["4. Yama emniyet validasyonunu etkiler mi? Nasıl anlaşılır?", "[B] Değişiklik kapsamı bilinmiyor. [Ö] Sürüm notları, devre ve bağımlılık incelemesiyle kapak/şerit duruşu, tepki süresi, reset ve yük tutma etkisi belirlenir. Yetkili uzman etkilenen fonksiyonları yeniden doğrular; salt üretim çalışıyor gözlemi yeterli değildir [K5]."],
+          ["5. Yama mümkün değilse telafi edici önlem nedir?", "[Ö] Varsa gereksiz servis yolunu kapat; gerekli erişimi süreli, kişisel ve en az yetkili yap; servis cihazını denetle ve konfigürasyon değişikliklerini izle. Süreli risk kararı, sorumlu ve gözden geçirme tarihi kaydedilsin. Önlemler açığı gidermez; emniyet gösterilemiyorsa duruş sürdürülür."]
+        ]},
+        {"heading": "Vulnerability Decision - sonuç ve kanıt paketi", "paragraph": "VD-05 / durum: AÇIK - etkilenme belirsiz; doğrulanmış zafiyet yok. [Ö] EP 09: üretici, bileşen adı/sürümü, tanımlayıcı ve bağımlılık kanıtını kaydet; bilinmeyeni açık yaz [K8]. EP 10: gerçek duyuru ile bileşen/sürüm/erişim eşlemesi. EP 11: yama, geri dönüş ve emniyet test kayıtları. Sorumlu önerisi: işletmenin bakım + emniyet yetkilisi; öğrenci belge takibini yapar. Yeni kanıt/duyuru gelince veya sonraki laboratuvar öncesi yeniden incele."}
+      ],
+      "refs": ["F1", "K1", "K5", "K8", "K9"],
+      "note": "SBOM: yazılım malzeme listesi. Yukarıdaki tablo tam SBOM değildir. Ağ taraması ve gerçek sisteme müdahale yapılmadı."
     }
   ]
 }

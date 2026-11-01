@@ -39,4 +39,22 @@ Lab 1-4 görevleri, kullanıcının verdiği genel föyün PDF sayfa 2-5 içeri�
 
 ## Açık kalanlar
 
-Ad Soyad ve Grup alanları öğrenci tarafından doldurulacak. Sınıf çakışmama durumu öğrencinin teyidine dayanıyor; liste kontrolü yapılmadı. Kör test oturumu uygulanmadı, canlı Trello panosu açılmadı, Lab 5-7 üretilmedi. Bilinmeyen teknik özellikler kanıt bulunana kadar bilinmiyor kalacak. Bu durumlar ilk dört hafta belgelerinin hazırlanmasından ayrı izlenir.
+25.10.2026 tesliminde Ad Soyad ve Grup alanları, kör test oturumu, canlı Trello panosu ve Lab 5-7 açıktı. 01.11.2026'da Lab 5 eklendi; Lab 6-7 ve diğer işler açık kalıyor. Sınıf çakışmama durumu öğrencinin teyidine dayanıyor; liste kontrolü yapılmadı. Bilinmeyen teknik özellikler kanıt bulunana kadar bilinmiyor kalacak.
+
+## 5. hafta ek kontrolü - 01.11.2026
+
+| Gereksinim | Karşılığı / sonuç |
+|---|---|
+| F1 PDF sayfa 6, örnek kayıt | Component X 2.4, CVE-XXXX-XXXX, Critical / CVSS 9.8, yama mevcut; tümü eğitim varsayımı olarak korundu. Gerçek CVE kimliği gibi sunulmadı. |
+| Soru 1 | Bileşen, sürüm ve ulaşılabilirlik için üç ayrı bilinmiyor sonucu ve kanıt ihtiyacı. |
+| Soru 2 | CVSS tek başına duruş gerekçesi değil; emniyet belirtisinde koşullu güvenli duruş ve kanıt koruma. Üretime devam onayı verilmedi. |
+| Soru 3 | Üretimden ayrılmış temsilî test, paket bütünlüğü, uyumluluk, yedek/geri dönüş ve regresyon ölçütleri. |
+| Soru 4 | Kapak/şerit duruşu, tepki süresi, reset ve yük tutma üzerinde değişiklik etkisi; yetkili validasyon ihtiyacı. |
+| Soru 5 | Yama ertelenirse erişim sınırlama, servis cihazı denetimi, izleme, süreli risk kararı ve emniyet koşulu. |
+| Çıktı ve EP | VD-05 / AÇIK - etkilenme belirsiz; EP 09 + EP 10 + EP 11. Tam SBOM veya uygulanmış yama değildir. |
+
+Son PDF Poppler ile 1600 piksel uzun kenarlı PNG'ye çevrilip sayfanın tamamı gözle incelendi; taşma, çakışma veya bozuk Türkçe karakter görülmedi. `pypdf` kontrolünde bir sayfa, doğru model/tarih, dört kaynak bağlantısı ve iki boş interaktif kimlik alanı doğrulandı; alan değerleri ile widget görünüm akışları kontrol edildi. Görev 1'in üç tablo satırı ve görev 2-5'in dört ayrı yanıtı mevcut. İlk dört PDF'nin dosya baytları önceki Git commit'i ile karşılaştırıldı ve aynı bulundu. Yerel Markdown bağlantıları ve `git diff --check` kontrolü geçti.
+
+Lab 5 SHA-256: `f7471be57342cc823b02133fcce4ca097648b45b902d7b12774187b32048306c`.
+
+Bu kontroller belge kalitesi içindir. Gerçek makine testi, yama kurulumu ve kör test oturumu yapılmadı.

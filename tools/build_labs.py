@@ -1,4 +1,5 @@
-"""Dört tek sayfalık föyü veriden üretir; taşmayı hata sayar. Python + reportlab."""
+"""Tek sayfalık föyleri veriden üretir; --lab N yalnız seçili haftayı üretir."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -31,6 +32,8 @@ SOURCES = {
     'K3': ('ISA/IEC 62443-3-2 önizlemesi', 'https://www.isa.org/getmedia/661c718f-8e64-446d-acf9-2c6286db1b33/isa-62443-3-2-preview.pdf'),
     'K4': ('ISO 13849-1:2023 özeti', 'https://www.iso.org/standard/73481.html'),
     'K5': ('NIST SP 800-82 Rev.3', 'https://csrc.nist.gov/pubs/sp/800/82/r3/final'),
+    'K8': ('SBOM 2026 rehberi', 'https://www.cyber.gov.au/publication/2026-minimum-elements-for-a-software-bill-of-materials-sbom'),
+    'K9': ('FIRST CVSS rehberi', 'https://www.first.org/cvss/user-guide.html'),
     'F1': ('Dersin Lab Föyleri PDF dosyası, s. 2-5 (yerel)', None),
 }
 
@@ -180,6 +183,8 @@ def build(lab, date):
     refs=[]
     for key in lab['refs']:
         label,url=SOURCES[key]
+        if key == 'F1':
+            label = f"Dersin Lab Föyleri PDF dosyası, s. {lab['source_page']} (yerel)"
         refs.append(f'<link href="{url}" color="#008d88">[{key}] {escape(label)}</link>' if url else f'[{key}] {escape(label)}')
     refs.append('Bağlantılar tıklanabilir; kaynak/kanıt kaydı: docs/KAYNAKLAR.md. Erişim: '+date+'.')
     obj=Paragraph(' | '.join(refs),SMALL)
@@ -199,6 +204,12 @@ def build(lab, date):
     print(f"{target.name}: içerik altı {top:.1f} pt; 1 sayfa")
 
 if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--lab',type=int,help='Yalnız belirtilen haftayı üret')
+    args=parser.parse_args()
     data=json.loads((ROOT/'data/labs.json').read_text(encoding='utf-8'))
-    for lab in data['labs']:
-        build(lab,data['date'])
+    labs=[lab for lab in data['labs'] if args.lab is None or lab['id']==args.lab]
+    if not labs:
+        parser.error('İstenen hafta veride bulunamadı')
+    for lab in labs:
+        build(lab,lab.get('date',data['date']))

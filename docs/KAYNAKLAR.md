@@ -2,6 +2,8 @@
 
 Araştırma/kayıt tarihi: **25.10.2026**. Araştırma pasiftir. Kaynak bağlantıları, erişim tarihi ve kaynağın hangi iddiayı desteklediği kaydedilmiştir. Tam web sayfaları depoda yeniden yayımlanmamıştır; içerik gelecekte değişebilir.
 
+**5. hafta güncellemesi: 01.11.2026.** K1 ve K5 yeniden incelendi; K8/K9 aşağıdaki kayda eklendi. K1 ürün sayfası PLC/firmware sürümü veya modele özgü SBOM vermiyor. Bu, böyle bir belgenin hiçbir yerde bulunmadığı iddiası değildir.
+
 | Kod | Birincil kaynak | Desteklediği bilgi / sınır |
 |---|---|---|
 | K1 | [Karmetal OSA 350x450 PLC](https://www.karmetal.com.tr/urun/30/osa-350x450-plc.html) | Model, kontrol paneli, hareket/algılama ve üreticinin bildirdiği duruş işlevleri. Devre veya siber güvenlik kanıtı değil. |
@@ -11,7 +13,9 @@ Araştırma/kayıt tarihi: **25.10.2026**. Araştırma pasiftir. Kaynak bağlant
 | K5 | [NIST SP 800-82 Rev.3, final](https://csrc.nist.gov/pubs/sp/800/82/r3/final) ve [rapor](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf) | OT bağlamı, bölgeleme ve bakım erişimi için rehber. Rev.4 taslak bilgisi var; bu projede final Rev.3 esas alınır. |
 | K6 | [Avrupa Komisyonu - CRA](https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act) ve [resmî açıklama](https://digital-strategy.ec.europa.eu/en/policies/cra-summary) | CRA takvimi ve kapsam koşulları. |
 | K7 | [EUR-Lex - Makine Tüzüğü özeti](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=LEGISSUM:4682019) ve [Komisyon makine sayfası](https://single-market-economy.ec.europa.eu/sectors/mechanical-engineering/machinery_en) | Düzeltilmiş uygulama tarihi ve makine emniyeti bağlamı. |
-| F1 | Kullanıcının verdiği Lab Föyleri.pdf, 8 sayfa | Lab 1-4: PDF sayfa 2, 3, 4, 5. Görev ve EP eşleşmelerinin kaynağı. |
+| K8 | [2026 Minimum Elements for a Software Bill of Materials - ASD/CISA ve ortakları](https://www.cyber.gov.au/publication/2026-minimum-elements-for-a-software-bill-of-materials-sbom) | 01.11.2026 erişimi. Bileşen/sürüm/bağımlılık bilgisi ve bilinmeyenin açık kaydı; Lab 5 kanıt ihtiyacı. Proje tablosu tam veya rehbere uygun SBOM sayılmaz. |
+| K9 | [FIRST CVSS User Guide](https://www.first.org/cvss/user-guide.html) | 01.11.2026 erişimi. CVSS temel puanı ciddiyeti ölçer; tek başına ortama özgü risk kararı vermez. Föydeki 9.8 için sürüm/vektör verilmedi; puan yeniden hesaplanmadı. |
+| F1 | Kullanıcının verdiği Lab Föyleri.pdf, 8 sayfa | Lab 1-5: PDF sayfa 2-6. Lab 5'in 5 sorusu ve EP 09/10/11 eşleşmesi sayfa 6'dan alındı. |
 | F2 | Kullanıcının verdiği Lab1_Safety_Architecture.pdf, 1 sayfa | Yalnız görsel düzen referansı. PaketPro/KANTEC/robot bilgileri seçilen makineye aktarılmadı. |
 
 ## K1'de doğrulanan teknik bilgiler
@@ -39,5 +43,10 @@ Bunlar ürün ailesine ait kamuya açık beyanlardır. Belirli seri numaralı bi
 | V02 | Z0-Z5 ve C1-C5 hedef ağı | Lab 2-4 | Öneri; uygulanmış mimari değil |
 | V03 | E, tehlikeye maruziyet olarak yorumlandı | Lab 3 | Föy değişkeni açıklamıyor; öğretim elemanı farklı tanım verirse yeniden puanla |
 | B06 | AB pazarına arz tarihi, varyantı ve teknik dosya yok | Mevzuat kapsamı | Belgeler bulunmadan kapsam/uygunluk kararı yok |
+| V04 | Component X 2.4, CVE-XXXX-XXXX, CVSS 9.8 ve yama mevcut ifadesi yalnız föyün örneği | Lab 5 karar alıştırması | Gerçek CVE kimliği, üretici duyurusu ve makine envanteriyle eşleştirilmedi |
+
+## Lab 5 karar ve kanıt sınırı
+
+VD-05: **Açık / etkilenme belirsiz.** Bileşen varlığı, etkilenen sürüm ve erişim/tetiklenme koşulu doğrulanmadı. Bu sonuç “etkilenmiyor” veya “üretime devam güvenli” anlamına gelmez. Tam SBOM, yama paketi veya gerçek test sonucu üretilmedi. NIST SP 800-82 Rev.3 bölüm 6.2.11 yama yönetimi rehberiyle tutarlı olarak önerilen test/geri dönüş süreci yazıldı; gerçek kurulum yapılmadı. Emniyet üzerindeki etki Lab 1/4'teki kapak/şerit duruşu, reset ve yük tutma gereksinimleriyle ilişkilendirildi.
 
 Firma ile görüşmek bu çalışmanın kapsamı dışında kalır. Kamuya açık kanıt bulunamayan alanlar, gerçekmiş gibi tamamlanmaz. Sınıf seçimi için yalnız öğrencinin çakışmama teyidi kayıt altındadır.
