@@ -1,5 +1,6 @@
 """Tek sayfalık föyleri veriden üretir; --lab N yalnız seçili haftayı üretir."""
 import argparse
+from io import BytesIO
 import json
 import os
 from pathlib import Path
@@ -12,6 +13,8 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph, Table, TableStyle
+from pypdf import PdfReader, PdfWriter
+from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject, RectangleObject, TextStringObject
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'output' / 'pdf'
@@ -24,21 +27,9 @@ NAVY, TEAL = colors.HexColor('#18314b'), colors.HexColor('#008d88')
 INK, LIGHT, LINE = colors.HexColor('#24364b'), colors.HexColor('#eef5f8'), colors.HexColor('#cbdbe5')
 W, H, M = 595.276, 841.89, 35
 CW = W - 2*M
-BASE = ParagraphStyle('body', fontName='Arial', fontSize=9.0, leading=12.2, textColor=INK)
+BASE = ParagraphStyle('body', fontName='Arial', fontSize=10.0, leading=13.5, textColor=INK)
 SMALL = ParagraphStyle('small', parent=BASE, fontSize=7.0, leading=9.6)
-CELL = ParagraphStyle('cell', parent=BASE, fontSize=8.2, leading=11.1)
-SOURCES = {
-    'K1': ('Karmetal ürün sayfası', 'https://www.karmetal.com.tr/urun/30/osa-350x450-plc.html'),
-    'K3': ('ISA/IEC 62443-3-2 önizlemesi', 'https://www.isa.org/getmedia/661c718f-8e64-446d-acf9-2c6286db1b33/isa-62443-3-2-preview.pdf'),
-    'K4': ('ISO 13849-1:2023 özeti', 'https://www.iso.org/standard/73481.html'),
-    'K5': ('NIST SP 800-82 Rev.3', 'https://csrc.nist.gov/pubs/sp/800/82/r3/final'),
-    'K8': ('SBOM 2026 rehberi', 'https://www.cyber.gov.au/publication/2026-minimum-elements-for-a-software-bill-of-materials-sbom'),
-    'K9': ('FIRST CVSS rehberi', 'https://www.first.org/cvss/user-guide.html'),
-    'K10': ('ENISA CRA SRP SSS', 'https://www.enisa.europa.eu/topics/product-security/vulnerability-services/eu-incident-response-and-cyber-crisis-management/single-reporting-platform-srp/frequently-asked-questions'),
-    'K11': ('AB Komisyonu CRA bildirim', 'https://digital-strategy.ec.europa.eu/en/policies/cra-reporting'),
-    'K12': ('NIST AI RMF 1.0', 'https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf'),
-    'F1': ('Dersin Lab Föyleri PDF dosyası, s. 2-5 (yerel)', None),
-}
+CELL = ParagraphStyle('cell', parent=BASE, fontSize=9.0, leading=12.0)
 
 def p(text, style=BASE):
     return Paragraph(escape(text), style)
@@ -81,59 +72,57 @@ def arrow(c, x1, y1, x2, y2, label=None):
 
 def diagram(c, lab, top):
     if lab['id'] == 7:
-        top = heading(c, 'Varsayımsal yardımcı YZ yolu [V] / önerilen sınırlar [Ö]', top)
+        top = heading(c, 'Bu makine için varsayılan yardımcı yapay zekâ akışı', top)
         positions = [M, M+137, M+274, M+411]
         widths = [112, 112, 112, CW-411]
         for x, width, title, subtitle in zip(positions, widths,
-                ['Kamera / girdi', 'YZ önerisi', 'Bağımsız kontrol', 'Normal PLC'],
+                ['Kamera / girdi', 'Yapay zekâ önerisi', 'Bağımsız kontrol', 'Normal PLC'],
                 ['bütünlük kontrolü', 'OK / RED + skor', '+ yerel teyit', 'çevrim isteği']):
             box(c, x, top, width, 29, title, subtitle, LIGHT)
         for i in range(3):
             arrow(c, positions[i]+widths[i], top+15, positions[i+1], top+15)
         top += 35
-        box(c, M, top, CW, 25, 'Emniyet yolu YZ dışında: kapak / şerit duruşu + güvenli tutma + yerel yeniden başlatma [Ö]', fill=NAVY)
+        box(c, M, top, CW, 25, 'Emniyet yolu ayrı kalır: kapak / şerit duruşu + güvenli tutma + yerel yeniden başlatma', fill=NAVY)
         return top+33
     if lab['id'] == 1:
-        top = heading(c, 'İşlevsel harita - gerçek bağlantı şeması değildir', top)
+        top = heading(c, 'Normal kontrol yolu ve emniyet yolu', top)
         cols = [(M, 147), (M+163, 155), (M+334, CW-334)]
         for (x, w), title, sub, fill in zip(cols,
-                ['Sensör / encoder [D]', 'Normal PLC paneli [D]', 'Şerit / besleme [D]'],
+                ['Sensör / encoder', 'Normal PLC paneli', 'Şerit / besleme'],
                 ['', 'üretim kumandası', 'tehlikeli hareket'], [LIGHT, TEAL, LIGHT]):
             box(c, x, top, w, 29, title, sub, fill)
         arrow(c, M+147, top+15, M+163, top+15)
         arrow(c, M+318, top+15, M+334, top+15)
         top += 37
         for (x, w), title, sub, fill in zip(cols,
-                ['Kapak / şerit algısı [D]', 'Emniyet mantığı [B]', 'Duruş + güvenli tutma [Ö]'],
-                ['koruma isteği', 'röle / Safety PLC: bilinmiyor', 'son eleman / STO: bilinmiyor'], [LIGHT, NAVY, LIGHT]):
+                ['Kapak / şerit algısı', 'Emniyet devresi', 'Güvenli durum'],
+                ['koruma isteği', 'röle / Safety PLC: bilinmiyor', 'duruş + güvenli tutma'], [LIGHT, NAVY, LIGHT]):
             box(c, x, top, w, 31, title, sub, fill)
         arrow(c, M+147, top+16, M+163, top+16)
         arrow(c, M+318, top+16, M+334, top+16)
         return top+39
-    if lab['id'] in (2, 4):
-        top = heading(c, 'Önerilen erişim sınırları [Ö] - tüm ağ bağlantıları koşulludur', top)
+    if lab['id'] == 2:
+        top = heading(c, 'Önerilen bölge ve bağlantı şeması', top)
         widths = [85, 101, 94, 100]
         positions = [M, M+118, M+252, M+379]
         for x, width, title, sub in zip(positions, widths,
-                ['Z0 Dış servis', 'Z2 OT DMZ', 'Z3 Bakım', 'Z4 Makine'],
+                ['Dış servis', 'Ara erişim', 'Bakım bölgesi', 'Makine bölgesi'],
                 ['kişisel kimlik', 'VPN / ara nokta', 'mühendislik cihazı', 'PLC / panel']):
             box(c, x, top, width, 31, title, sub, TEAL if 'Z2' in title else LIGHT)
-        for i, lbl in enumerate(['C1', 'C2', 'C3']):
-            arrow(c, positions[i]+widths[i], top+16, positions[i+1], top+16, lbl)
+        for i in range(3):
+            arrow(c, positions[i]+widths[i], top+16, positions[i+1], top+16)
         top += 42
-        box(c, M, top, 175, 30, 'Z1 Ofis [Ö]', 'Z1 -> Z4 doğrudan erişim yasak')
-        box(c, M+240, top, 239, 30, 'Z5 Emniyet işlevi [Ö]', 'uzaktan emniyet yazma / reset yasak', NAVY)
+        box(c, M, top, 175, 30, 'Ofis bölgesi', 'makineye doğrudan erişim yok')
+        box(c, M+240, top, 239, 30, 'Emniyet bölgesi', 'uzaktan koruma ayarı / yeniden başlatma yok', NAVY)
         c.setStrokeColor(TEAL)
         c.line(M+165, H-(top-11), M+165, H-top)
         c.setFillColor(TEAL)
         c.setFont('Arial', 6)
-        c.drawString(M+169, H-top+2, 'C5')
         # C4 is explicitly limited to status/permission signals.
         c.setStrokeColor(TEAL)
         c.line(M+429, H-(top-11), M+429, H-top)
         c.setFillColor(TEAL)
         c.setFont('Arial', 6)
-        c.drawString(M+433, H-top+2, 'C4')
         return top+39
     return top
 
@@ -153,11 +142,49 @@ def table(c, data, top):
     obj.drawOn(c, M, H-top-h)
     return top+h+9
 
-def build(lab, date):
+def fill_identity(target, student, group):
+    reader=PdfReader(target)
+    writer=PdfWriter()
+    writer.clone_document_from_reader(reader)
+    form=writer._root_object['/AcroForm']
+    values={'ad_soyad':student,'grup':group}
+    for index,field_ref in enumerate(form['/Fields']):
+        field=field_ref.get_object()
+        value=values[str(field['/T'])]
+        rect=field['/Rect']
+        width,height=float(rect[2]-rect[0]),float(rect[3]-rect[1])
+        buffer=BytesIO()
+        appearance_canvas=canvas.Canvas(buffer,pagesize=(width,height))
+        appearance_canvas.setFillColor(LIGHT)
+        appearance_canvas.rect(0,0,width,height,fill=1,stroke=0)
+        appearance_canvas.setFillColor(INK)
+        appearance_canvas.setFont('Arial',9)
+        appearance_canvas.drawString(2,4,value)
+        appearance_canvas.save()
+        page=PdfReader(buffer).pages[0]
+        resources=page['/Resources'].clone(writer)
+        appearance=DecodedStreamObject()
+        appearance.set_data(page.get_contents().get_data())
+        appearance.update({NameObject('/Type'):NameObject('/XObject'),
+                           NameObject('/Subtype'):NameObject('/Form'),
+                           NameObject('/BBox'):RectangleObject([0,0,width,height]),
+                           NameObject('/Resources'):resources})
+        field[NameObject('/AP')]=DictionaryObject({NameObject('/N'):writer._add_object(appearance)})
+        field[NameObject('/V')]=TextStringObject(value)
+        field[NameObject('/DV')]=TextStringObject(value)
+        font_ref=next(ref for ref in resources['/Font'].values()
+                      if 'ArialMT' in str(ref.get_object().get('/BaseFont','')))
+        font_name=f'/Identity{index}'
+        form['/DR']['/Font'][NameObject(font_name)]=font_ref
+        field[NameObject('/DA')]=TextStringObject(f'{font_name} 9 Tf 0 g')
+    with target.open('wb') as stream:
+        writer.write(stream)
+
+def build(lab, date, student, group):
     target = OUT / lab['filename']
     c = canvas.Canvas(str(target), pagesize=(W,H), pageCompression=1)
     c.setTitle(f"Lab {lab['id']} - {lab['title']} - Karmetal OSA 350x450 PLC")
-    c.setAuthor('Endüstriyel Siber Güvenlik Ders Projesi')
+    c.setAuthor(student)
     c.setFillColor(NAVY)
     c.rect(0,H-86,W,86,stroke=0,fill=1)
     c.setFillColor(TEAL)
@@ -174,17 +201,18 @@ def build(lab, date):
     c.drawString(M,H-105,'Ad Soyad:')
     c.drawString(300,H-105,'Grup:')
     c.drawString(436,H-105,'Tarih: '+date)
-    # Empty interactive fields preserve unspecified identity without inventing it.
+    # Values are filled below with the embedded Turkish font and kept interactive.
     for name,x,w in [('ad_soyad',M+49,200),('grup',331,78)]:
         c.acroForm.textfield(name=name, tooltip=name, x=x, y=H-111, width=w,
                             height=16, borderWidth=0, fillColor=LIGHT, fontSize=9)
     top=123
+    context=p(lab['context'])
+    _,context_text_height=context.wrap(CW-16,1000)
+    context_height=max(49,context_text_height+14)
     c.setFillColor(LIGHT)
-    c.roundRect(M,H-top-49,CW,49,5,stroke=0,fill=1)
-    end=para(c, lab['context'],top+7,CW-16,M+8)
-    assert end <= top+46
-    top=178
-    top=para(c,'[D] Kaynakta doğrulanan  |  [B] Bilinmiyor  |  [V] Varsayım  |  [Ö] Öneri  |  [Ç] Analitik çıkarım',top,style=SMALL)+10
+    c.roundRect(M,H-top-context_height,CW,context_height,5,stroke=0,fill=1)
+    para(c,lab['context'],top+7,CW-16,M+8)
+    top+=context_height+8
     top=diagram(c,lab,top)
     for section in lab['sections']:
         top=heading(c,section['heading'],top)
@@ -195,18 +223,8 @@ def build(lab, date):
             top=para(c,answer,top)+7
         if 'table' in section:
             top=table(c,section['table'],top)
-    top=para(c,lab['note'],top,style=SMALL)+6
-    refs=[]
-    for key in lab['refs']:
-        label,url=SOURCES[key]
-        if key == 'F1':
-            label = f"Dersin Lab Föyleri PDF dosyası, s. {lab['source_page']} (yerel)"
-        refs.append(f'<link href="{url}" color="#008d88">[{key}] {escape(label)}</link>' if url else f'[{key}] {escape(label)}')
-    refs.append('Bağlantılar tıklanabilir; kaynak/kanıt kaydı: docs/KAYNAKLAR.md. Erişim: '+date+'.')
-    obj=Paragraph(' | '.join(refs),SMALL)
-    _,height=obj.wrap(CW,1000)
-    obj.drawOn(c,M,H-top-height)
-    top+=height
+    if lab['note']:
+        top=para(c,lab['note'],top,style=SMALL)+6
     if top>H-40:
         raise RuntimeError(f"Lab {lab['id']} sayfa taşıyor: {top:.1f} > {H-40:.1f}")
     c.setStrokeColor(LINE)
@@ -217,6 +235,7 @@ def build(lab, date):
     c.drawRightString(W-M,18,f"Hafta {lab['id']} | 1 / 1")
     c.showPage()
     c.save()
+    fill_identity(target,student,group)
     print(f"{target.name}: içerik altı {top:.1f} pt; 1 sayfa")
 
 if __name__=='__main__':
@@ -228,4 +247,4 @@ if __name__=='__main__':
     if not labs:
         parser.error('İstenen hafta veride bulunamadı')
     for lab in labs:
-        build(lab,lab.get('date',data['date']))
+        build(lab,lab.get('date',data['date']),data['student'],data['group'])

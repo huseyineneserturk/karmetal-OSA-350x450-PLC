@@ -1,5 +1,5 @@
 {
-  "date": "25.10.2026",
+  "date": "06.11.2026",
   "machine": "Karmetal OSA 350x450 PLC",
   "labs": [
     {
@@ -9,21 +9,51 @@
       "output": "Safety Function Map",
       "ep": "EP 03 - Safety Functions",
       "source_page": 2,
-      "context": "[D] Üretici; kapak açılması, şerit kopması ve şerit basıncının azalmasında otomatik duruş bildirir [K1]. [B] Bu işlevlerin devre yapısı, Safety PLC, STO ve PL/SIL değeri doğrulanmamıştır.",
+      "context": "Makine: Karmetal OSA 350x450 PLC otomatik şerit testere. Üretici, kapak açıldığında, şerit koptuğunda ve şerit basıncı azaldığında otomatik duruş olduğunu belirtiyor. Emniyet devresinin ayrıntıları bilinmiyor.",
       "sections": [
-        {"heading": "Görev - sekiz sorunun yanıtı", "qa": [
-          ["1. Tehlike nedir?", "[Ç] Hareketli şerit kesme/uzuv kaybı; mengene ve malzeme sürme hareketi sıkışma/ezilme riski doğurur. Şerit kopması, parça fırlaması ve bakımda beklenmeyen hareket de değerlendirilmelidir [K1]."],
-          ["2. Emniyet fonksiyonu hangisidir?", "[D] Kapak açılınca, şerit kopunca veya şerit basıncı düşünce otomatik duruş [K1]. [Ö] SF1: koruyucu açılınca tehlikeli hareketi durdur; SF2: şerit arızasında durdur; SF3: resetle kendiliğinden başlatma. SF3 gereksinim önerisidir."],
-          ["3. Emniyetle ilgili kumanda sistemi nerede?", "[B] Alttaki işlevsel zincirde giriş, mantık ve son eleman gösterilir; gerçek devre şeması yoktur. Switch'in sıradan PLC girişine bağlanması tek başına emniyet yeterliliğini kanıtlamaz."],
-          ["4. Normal PLC ile Safety PLC farkı nedir?", "Normal PLC üretim sırasını yönetir. Safety PLC, emniyet uygulamaları için doğrulanmış özellikler sunar; bütün zincirin uygun tasarım ve validasyonu yine gerekir. Her emniyet fonksiyonu Safety PLC kullanmak zorunda değildir [K4]."],
-          ["5. PLr / SIL neden önemlidir?", "Riskle orantılı güvenilirlik hedefidir. PLr ve SIL farklı değerlendirme çerçeveleridir. [B] Maruziyet, kaçınma imkânı, duruş süresi ve bileşen verileri yok; sayısal PLr/SIL veya sağlanmış seviye atanmamıştır [K4]."],
-          ["6. Güvenli durum nedir?", "[Ö] Şerit ve tehlikeli besleme hareketi durmuş; parça/gövde düşmesi önlenmiş; depolanmış enerji kontrol altında; yeniden başlatma yerel ve bilinçli olmalı. Tüm enerjiyi kesmek yükü düşürebilir; bakım izolasyonu ayrıca değerlendirilir."],
-          ["7. Dijital bağımlılıklar nelerdir?", "[V] Programlanabilir yapı varsa mantık programı, parametreler, firmware, mühendislik aracı ve reset/mod sinyalleri etkilidir. [B] Hangilerinin bu makinede bulunduğu bilinmiyor; kablolu röle çözümü de olasıdır."],
-          ["8. Siber müdahale nereden etkileyebilir?", "[V] Yetkisiz servis cihazı/bağlantısı -> kontrol parametresi değişikliği -> duruş isteğinin bastırılması -> kapak açıkken hareket -> yaralanma. Bu zincir yalnızca koruma değiştirilebilir ve bağımsız yol yetersizse geçerlidir; tespit edilmiş açık değildir."]
-        ]}
+        {
+          "heading": "Görev - sırayla cevaplayın",
+          "qa": [
+            [
+              "1. Bu makinede tehlike nedir? İnsan neyden zarar görür?",
+              "Hareketli şerit el ve parmakları kesebilir. Mengene ve malzeme sürme hareketi sıkışmaya yol açabilir. Şerit kopması da çalışan için yaralanma tehlikesi oluşturabilir."
+            ],
+            [
+              "2. Safety function (emniyet fonksiyonu) hangisidir?",
+              "Kapak açıldığında, şerit koptuğunda veya şerit basıncı azaldığında makinenin otomatik durmasıdır. Yeniden çalıştırmanın kendiliğinden olmaması da gerekli bir koruma olarak önerilir; bu özellik kaynakta doğrulanmadı."
+            ],
+            [
+              "3. Safety-related control system nerede? Şemada işaretleyin.",
+              "Şemadaki alt yol, insanı koruyan emniyet yoludur: kapak/şerit algısı, duruş kararını veren devre ve hareketi durduran elemanlar. Makinede emniyet rölesi mi yoksa Safety PLC mi kullanıldığı bilinmiyor."
+            ],
+            [
+              "4. Normal PLC ile Safety PLC farkı nedir?",
+              "Normal PLC kesim sırasını, boyu ve adedi yönetir. Safety PLC, insanı koruyan işlevler için tasarlanır. Bu makinede Safety PLC bulunduğu doğrulanmadı; koruma bir emniyet rölesiyle de sağlanabilir."
+            ],
+            [
+              "5. PLr / SIL neden var? Bu fonksiyon için neden önemli?",
+              "Emniyet işlevinin riske göre ne kadar güvenilir olması gerektiğini belirtirler. Duruş işlevinin bozulması yaralanmaya yol açabileceği için önemlidir. Ayrıntılı risk ve devre bilgisi olmadan bu makineye bir PLr veya SIL seviyesi verilemez."
+            ],
+            [
+              "6. Safe state (güvenli durum) nedir?",
+              "Şerit ve tehlikeli besleme hareketi durmuş, malzeme ve testere gövdesi güvenle tutulmuş olmalıdır. Makine kendiliğinden yeniden başlamamalıdır. Yalnız elektriği kesmek yeterli olmayabilir; gövdenin veya parçanın düşmesi de önlenmelidir."
+            ],
+            [
+              "7. Safety function hangi dijital bağımlılıklara sahip?",
+              "Programlanabilir bir koruma sistemi varsa yazılım, ayarlar, cihaz yazılımı ve yeniden başlatma sinyalleri etkili olabilir. Makinenin devresi bilinmediği için bunlar olası bağımlılıklardır."
+            ],
+            [
+              "8. Siber müdahale hangi noktadan bu fonksiyonu bozar?",
+              "Varsayımsal olarak bakım erişiminden koruma ayarları değiştirilirse kapak açıldığında duruş engellenebilir. Böylece operatör hareketli şeride ulaşabilir. Bu, ancak koruma yolu değiştirilebilir ve yeterince bağımsız değilse mümkün olur; gerçek bir açık tespit edilmedi."
+            ]
+          ]
+        }
       ],
-      "refs": ["K1", "K4"],
-      "note": "Doğrulama ihtiyacı: devre şeması, duruş ölçümü, reset davranışı, emniyet validasyonu."
+      "refs": [
+        "K1",
+        "K4"
+      ],
+      "note": ""
     },
     {
       "id": 2,
@@ -32,28 +62,79 @@
       "output": "Zone / Conduit Diagram",
       "ep": "EP 05 - Zone & Conduit",
       "source_page": 3,
-      "context": "[D] PLC kontrol paneli vardır [K1]. [B] Ağ, portlar ve uzaktan erişim bilinmiyor. Aşağıdaki bölgeleme [Ö] hedef modeldir; mevcut ağın keşfi veya IEC 62443 uygunluk beyanı değildir [K3].",
+      "context": "Makinenin PLC kontrol paneli olduğu biliniyor; ağ ve uzaktan erişim bilgisi bilinmiyor. Aşağıdaki bölgeler, bu makine için önerilen bir örnektir. Zone bölgeyi, conduit ise bölgeler arasındaki kontrollü geçişi ifade eder.",
       "sections": [
-        {"heading": "Görev A - varlıklar ve bölgeler", "qa": [
-          ["1. Hangi varlıklar aynı bölgede?", "[Ö] Z0: dış servis; Z1: ofis (ERP/e-posta); Z2: OT DMZ (erişim aracısı/kayıt); Z3: bakım mühendislik istasyonu; Z4: makine PLC ve operatör paneli; Z5: emniyet işlevi. K1 yalnız PLC panelini doğrular. Diğer ağ varlıkları öneridir. Robot kontrolörü ve SCADA bu makinede doğrulanmadığı için envantere eklenmez."],
-          ["2. Safety PLC hangi bölgede, neden?", "[Ö] Varsa Z5'te; üretim/bakım yetkisi emniyet değişikliği yetkisi vermemeli. [B] Safety PLC varlığı bilinmiyor. Z5 bir işlev sınırıdır; kablolu emniyet devresi de olabilir. Sadece VLAN ayırmak emniyet bağımsızlığı sağlamaz."],
-          ["3. Conduit'ler ve kontroller nerede?", "[Ö] C1 Z0<->Z2: kimlik, MFA, süreli VPN. C2 Z2<->Z3: kişisel hesap, kayıt, hedef kısıtı. C3 Z3<->Z4: onaylı cihaz/protokol, en az yetki. C4 Z4<->Z5: yalnız doğrulanmış durum/izin sinyalleri; uzaktan emniyet yazma/reset yok. C5 Z1<->Z2: yalnız onay/kayıt iş akışı; Z1->Z4 doğrudan yasak. Protokol/port envanteri olmadan numara uydurulmaz."]
-        ]},
-        {"heading": "Görev B - uzak erişim kararı (altı satır)", "table": {
-          "widths": [0.15, 0.23, 0.62],
-          "headers": ["Karar", "Seçim [Ö]", "Gerekçe / kontrol"],
-          "rows": [
-            ["Aracı", "Jump server", "Kontrollü ara nokta; PLC'ye doğrudan internet erişimi yok."],
-            ["Tünel", "VPN", "Güncel, yönetilen şifreli tünel; yalnız gerekli hedefe erişim."],
-            ["Kimlik", "MFA", "Parola sızmasının tek başına erişim vermesini önle."],
-            ["Hesap", "Kişisel", "Servis çalışanı bazında yetki, izlenebilirlik ve iptal."],
-            ["Kayıt", "Tam oturum kaydı", "Kim/ne/zaman; bütünlük korumalı kayıt ve sınırlı erişim."],
-            ["Zamanlama", "Varsayılan kapalı", "İş emri + yerel onay + süre sonu otomatik kapatma."]
+        {
+          "heading": "Görev A - varlıkları bölgelere ayırın",
+          "qa": [
+            [
+              "1. Hangi varlıklar aynı bölgede? Bölgeleri adlandırıp gruplandırın.",
+              "PLC ve operatör paneli makine bölgesinde; bakım bilgisayarı bakım bölgesinde; ofis bilgisayarları ofis bölgesinde yer alır. Uzak servis için ayrı bir ara erişim bölgesi önerilir. Robot ve SCADA bu makinede doğrulanmadığı için eklenmedi."
+            ],
+            [
+              "2. Safety PLC hangi bölgede, neden?",
+              "Varsa ayrı bir emniyet bölgesine konur. Çünkü bakım veya üretim erişimi, insanı koruyan işlevleri değiştirme yetkisi vermemelidir. Makinede Safety PLC bulunduğu bilinmiyor; emniyet bölgesi bir röle devresini de temsil edebilir."
+            ],
+            [
+              "3. Bölgeler arası geçişler nerede? Her geçişte ne kontrol edilecek?",
+              "Dış servis ile ara erişim arasında kimlik ve bağlantı süresi; ara erişim ile bakım bilgisayarı arasında kullanıcı yetkisi ve kayıt; bakım bilgisayarı ile PLC arasında izinli cihaz ve işlemler kontrol edilir. Ofisten PLC’ye doğrudan erişim verilmez. Emniyet yolunda uzaktan ayar değiştirme veya yeniden başlatma engellenir."
+            ]
           ]
-        }}
+        },
+        {
+          "heading": "Görev B - uzak erişim kararı",
+          "table": {
+            "widths": [
+              0.14,
+              0.28,
+              0.58
+            ],
+            "headers": [
+              "Karar",
+              "Seçim",
+              "Nedeni"
+            ],
+            "rows": [
+              [
+                "Aracı",
+                "Jump server (ara sunucu)",
+                "PLC’ye doğrudan bağlanmak yerine erişimi tek noktadan kontrol etmek."
+              ],
+              [
+                "Tünel",
+                "VPN",
+                "Bağlantıyı şifrelemek ve yalnız gerekli makineye erişmek."
+              ],
+              [
+                "Kimlik",
+                "MFA (çok faktörlü doğrulama)",
+                "Parolanın yanında ikinci bir doğrulama istemek."
+              ],
+              [
+                "Hesap",
+                "Kişisel hesap",
+                "Hangi işlemi kimin yaptığını bilmek."
+              ],
+              [
+                "Kayıt",
+                "Tam oturum kaydı",
+                "Bakım sırasında yapılan işlemleri sonradan inceleyebilmek."
+              ],
+              [
+                "Zamanlama",
+                "Varsayılan kapalı",
+                "Erişimi yalnız onaylanan bakım süresince açmak."
+              ]
+            ]
+          }
+        }
       ],
-      "refs": ["K1", "K3", "K5"],
-      "note": "SL-T belirlenmedi; risk analizi ve gerçek varlık/bağlantı envanteri gereklidir."
+      "refs": [
+        "K1",
+        "K3",
+        "K5"
+      ],
+      "note": ""
     },
     {
       "id": 3,
@@ -62,26 +143,79 @@
       "output": "Risk Register",
       "ep": "EP 04 - Risk Assessment",
       "source_page": 4,
-      "context": "Üç senaryonun tamamı [V] masa başı varsayımıdır; makinede saptanmış zafiyet değildir. Skor = L x S x E, her biri 1-3. S=3 olan tüm senaryolar skorundan bağımsız olarak öne alınır [F1].",
+      "context": "Üç senaryo da varsayımsaldır; makinede bulunmuş bir açık değildir. Skor = L x S x E. L olasılık, S zararın şiddeti, E tehlikeye maruz kalma olarak 1-3 arası yorumlandı. Föy E’yi açıklamadığı için bu yorum varsayımdır.",
       "sections": [
-        {"heading": "Puanlama - bu çalışma için operasyonel tanım", "paragraph": "L: koşullar oluşursa gerçekleşme olasılığı (1 düşük, 2 orta, 3 yüksek). S: fiziksel zarar (1 hafif, 2 ciddi, 3 kalıcı ağır yaralanma/ölüm). E: tehlikeye maruziyet (1 seyrek, 2 aralıklı, 3 sık). E yorumu föyde açılmadığı için çalışma varsayımıdır. Puanlar saha ölçümü değildir; başlangıç riski için uzmanlık dışı eğitim tahminidir."},
-        {"heading": "Üç senaryo - aktör / kapı / eylem / zincir / fiziksel sonuç", "table": {
-          "widths": [0.075, 0.56, 0.065, 0.065, 0.065, 0.08, 0.09],
-          "headers": ["ID", "Senaryo [V] ve gerekli koşul", "L", "S", "E", "Skor", "Öncelik"],
-          "rows": [
-            ["R1", "Yetkisiz kişi -> varsa servis yolu -> koruma mantığını değiştirir -> kapak açıldığında duruş olmaz -> şerit eli keser. Koşul: mantık yazılabilir ve bağımsız duruş yolu yetersiz.", "2", "3", "3", "18", "Kritik / 1"],
-            ["R2", "Zararlı yazılım taşıyan servis cihazı -> varsa bakım portu -> besleme/reset parametresini bozar -> sıkışma açılırken beklenmeyen hareket -> mengene eli ezer. Koşul: yazma erişimi ve yerel başlatma kilidi eksik.", "2", "3", "2", "12", "Yüksek / 2"],
-            ["R3", "Yetkisiz bakım kullanıcısı -> varsa yerel ayar aracı -> şerit arızası eşiğini bozar -> seyrek bakım denemesinde duruş gecikir -> kopan şerit ağır yaralar. Koşul: eşik dijital ve değiştirilebilir.", "1", "3", "1", "3", "Düşük* / 3"]
+        {
+          "heading": "Görev - üç senaryo kurun ve puanlayın",
+          "table": {
+            "widths": [
+              0.075,
+              0.55,
+              0.065,
+              0.065,
+              0.065,
+              0.08,
+              0.1
+            ],
+            "headers": [
+              "No",
+              "Kim -> kapı -> eylem -> zincir -> fiziksel sonuç",
+              "L",
+              "S",
+              "E",
+              "Skor",
+              "Öncelik"
+            ],
+            "rows": [
+              [
+                "1",
+                "Yetkisiz kişi -> varsa bakım bağlantısı -> koruma ayarını değiştirir -> kapak açıldığında şerit durmaz -> operatörün eli kesilir. Koşul: ayar değiştirilebilir ve bağımsız duruş yetersiz.",
+                "2",
+                "3",
+                "3",
+                "18",
+                "Kritik / 1"
+              ],
+              [
+                "2",
+                "Zararlı yazılım taşıyan bakım bilgisayarı -> varsa servis girişi -> besleme ayarını bozar -> sıkışma açılırken malzeme hareket eder -> operatörün eli ezilir. Koşul: yazma erişimi ve yeniden başlatma koruması eksik.",
+                "2",
+                "3",
+                "2",
+                "12",
+                "Yüksek / 2"
+              ],
+              [
+                "3",
+                "Yetkisiz bakım kullanıcısı -> varsa ayar aracı -> şerit arızası eşiğini değiştirir -> seyrek bakım denemesinde duruş gecikir -> kopan şerit yaralar. Koşul: bu eşik yazılımla değiştirilebilir.",
+                "1",
+                "3",
+                "1",
+                "3",
+                "Düşük* / 3"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Sorular",
+          "qa": [
+            [
+              "1. En yüksek öncelikli senaryonuz hangisi? Neden?",
+              "Birinci senaryodur; skoru 18’dir ve operatörün hareketli şeritle temas etmesi ağır yaralanmaya yol açabilir."
+            ],
+            [
+              "2. S=3 olup skoru düşük kalan senaryonuz var mı? Nasıl görünür kılacaksınız?",
+              "Üçüncü senaryonun skoru 3 olsa da S=3’tür. Tabloda yıldızla işaretleyip ağır yaralanma ihtimali nedeniyle incelemeye öncelikli alınacağını belirttim. Düşük toplam puan, bu senaryonun göz ardı edilebileceği anlamına gelmez."
+            ]
           ]
-        }},
-        {"heading": "Görev - öncelik ve azaltma kararı", "qa": [
-          ["1. En yüksek öncelik hangisi, neden?", "R1: hem 18 ile kritik hem S=3; sık operatör maruziyetinde kapak korumasının kaybı ağır yaralanmaya gidebilir. Öncelik sırası R1 > R2 > R3; üçü de emniyet incelemesine alınır."],
-          ["2. S=3 olup skoru düşük kalan var mı?", "R3: 1 x 3 x 1 = 3. *Sayısal bant düşük olsa da S=3 bayrağıyla zorunlu emniyet incelemesi; kabul edilmiş risk değildir. Kanıt eksikliği düşük risk anlamına gelmez."]
-        ]},
-        {"heading": "Kontrol, kanıt ve takip", "paragraph": "[Ö] R1: emniyet değişiklik yetkisini ayır, bağımsız duruşu doğrula. R2: kontrollü servis cihazı, değişiklik onayı ve yerel yeniden başlatma şartı. R3: kritik ayar bütünlüğü, onaylı yedek ve validasyon. Sorumlu önerisi: işletmenin bakım + emniyet yetkilisi; öğrenci yalnız belge takibi yapar. Gerekli kanıt: devre/ayar listesi, yetki matrisi ve test raporu. Durum: üçü de açık; artık risk kontrol doğrulanmadan puanlanmaz."}
+        }
       ],
-      "refs": ["F1", "K1", "K3", "K5"],
-      "note": "Bantlar: Kritik 18-27 | Yüksek 9-17 | Orta 4-8 | Düşük 1-3. S=3 istisnası saklıdır."
+      "refs": [
+        "F1",
+        "K1"
+      ],
+      "note": "Kritik: 18-27 | Yüksek: 9-17 | Orta: 4-8 | Düşük: 1-3. *S=3 olanlar, skor düşük olsa da öne alınır. Puanlar ölçüm değil, eğitim tahminidir."
     },
     {
       "id": 4,
@@ -90,118 +224,215 @@
       "output": "Secure Architecture",
       "ep": "EP 02 + EP 06",
       "source_page": 5,
-      "context": "[B] Mevcut uzaktan erişim, ağ topolojisi ve emniyet devresi kamuya açık kaynaklarla doğrulanmadı. Hedef şema [Ö] kavramsal gereksinim modelidir; üreticiye ait uygulanmış tasarım değildir [K1, K5].",
+      "context": "Makinede uzaktan bakım bulunup bulunmadığı ve emniyet devresinin yapısı bilinmiyor. Aşağıdaki hedef, uzaktan bakım gerekmesi durumunda sağlanması önerilen koşulları gösterir.",
       "sections": [
-        {"heading": "Görev A - mevcut -> hedef", "table": {
-          "widths": [0.34, 0.66],
-          "headers": ["Mevcut: kanıt durumu", "Hedef: beş gereksinim [Ö]"],
-          "rows": [
-            ["Servis yolu / internet bağlantısı: bilinmiyor.", "G1 Aracı: yalnız onaylı ara nokta; PLC'ye doğrudan erişimi engelle."],
-            ["Şifreleme / kimlik doğrulama: bilinmiyor.", "G2 Tünel + kimlik: şifreli VPN ve MFA zorunlu olsun."],
-            ["Hesap ve rol politikası: bilinmiyor.", "G3 Hesap: kişisel ve göreve sınırlı yetki; ortak hesap kullanma."],
-            ["Oturum kayıtları: bilinmiyor.", "G4 İz: tam oturum kaydı, saat eşleme ve kayıt bütünlüğü sağla."],
-            ["Onay / açık kalma süresi: bilinmiyor.", "G5 Süre: varsayılan kapalı; yerel onaylı bakım penceresi sonunda kapat."]
+        {
+          "heading": "Görev A - mevcut durum -> hedef (beş ilke)",
+          "table": {
+            "widths": [
+              0.32,
+              0.68
+            ],
+            "headers": [
+              "Mevcut durum",
+              "Hedef"
+            ],
+            "rows": [
+              [
+                "Bağlantı yolu bilinmiyor.",
+                "PLC’ye doğrudan erişim yerine kontrollü bir ara nokta bulunmalı."
+              ],
+              [
+                "Tünel ve kimlik kontrolü bilinmiyor.",
+                "VPN ile şifreli bağlantı ve MFA ile çok faktörlü doğrulama kullanılmalı."
+              ],
+              [
+                "Hesap ve yetkiler bilinmiyor.",
+                "Her bakım çalışanı kişisel hesapla, yalnız işi için gereken yetkiye sahip olmalı."
+              ],
+              [
+                "Oturum kaydı bilinmiyor.",
+                "Kimin, ne zaman, hangi işlemi yaptığı kaydedilmeli."
+              ],
+              [
+                "Erişimin açık kalma süresi bilinmiyor.",
+                "Erişim normalde kapalı olmalı; yerel onayla açılıp bakım bitince kapanmalı."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Görev B - functional safety köprüsü",
+          "qa": [
+            [
+              "1. Saldırgan içeri girerse emniyet fonksiyonu etkilenir mi? Neden?",
+              "Gerçek devre bilinmediği için kesin cevap verilemez. Aynı erişimle koruma ayarları da değiştirilebiliyorsa emniyet etkilenebilir. Bu nedenle bakım erişimi ele geçirilse bile kapak ve şerit arızası nedeniyle duruş korunmalıdır."
+            ],
+            [
+              "2. Bağımsız çalışma için gereksinimi yazın; çözümü değil.",
+              "Normal kontrol sistemi veya bakım bağlantısı bozulsa bile kapak açıldığında ya da şerit arızasında tehlikeli hareket durmalı ve parça/gövde güvenle tutulmalıdır. Uzaktan komut bu korumayı kaldıramamalı veya makineyi kendiliğinden yeniden başlatamamalıdır. Duruş süresi risk değerlendirmesiyle belirlenmelidir."
+            ]
           ]
-        }},
-        {"heading": "Görev B - functional safety köprüsü", "qa": [
-          ["1. Saldırgan içeri girerse emniyet etkilenir mi?", "[B] Gerçek devre bilinmediğinden etkilenmez denemez. [V] Ortak yetki, program veya enerji bağımlılığı varsa etkilenebilir. [Ö] Hedefte normal PLC/bakım hesabının ele geçirilmesi kapak/şerit duruşunu devre dışı bırakamamalı; bu özellik devre incelemesi ve yetkili validasyonla gösterilmelidir."],
-          ["2. Bağımsız çalışma gereksinimi nedir?", "G6: Üretim kontrolü veya servis erişimi hatalı/kötücül davransa da koruyucu açılması ve şerit arızası tehlikeli hareketi belirlenmiş sürede durdurmalı; yük güvenle tutulmalı, duruş korunmalı ve uzaktan komut yeniden başlatamamalıdır. İletişim kaybı bu özelliği bozamamalıdır. Süre sınırı risk/duruş ölçümüyle belirlenecek; ürün/topoloji seçimi üreticiye aittir."]
-        ]},
-        {"heading": "Kabul ölçütü ve masa başı kontrolü", "paragraph": "[Ö] Geçersiz kimlik ve bakım penceresi dışındaki istek reddedilmeli; geçerli oturum yalnız izinli hedefe ulaşmalı ve kayıt üretmelidir. Erişim kesilince makine emniyeti korunmalıdır. Normal kontrolün ihlal edildiği senaryoda emniyet değişikliği/uzaktan reset engellenmelidir. Bu ölçütler henüz gerçek makinede test edilmedi; yalnız belge üzerinde değerlendirilecektir."}
+        }
       ],
-      "refs": ["K1", "K4", "K5"],
-      "note": "Föyün tarafsızlık ilkesine uygun olarak gereksinim tanımlanır; uygulama kararı firmaya aittir."
+      "refs": [
+        "K1",
+        "K5"
+      ],
+      "note": ""
     },
     {
       "id": 5,
-      "date": "01.11.2026",
       "filename": "Lab5_SBOM_CVE_Patch.pdf",
       "title": "SBOM / CVE / Patch",
       "output": "Vulnerability Decision",
       "ep": "EP 09 + EP 10 + EP 11",
       "source_page": 6,
-      "context": "[B] Makineye özgü SBOM, PLC modeli ve firmware sürümü doğrulanmadı [K1]. [V] Föyün örnek zafiyet kaydı gerçek makine bulgusu değildir. Karar: etkilenme belirsiz; yama uygulanmaz, kanıt toplanır.",
+      "context": "SBOM yazılım bileşen listesidir; CVE bir açığın kayıt kimliği, CVSS ise ciddiyet puanıdır. Karmetal’in PLC modeli, yazılım sürümü ve SBOM’u bilinmiyor. Aşağıdaki kayıt yalnız föyde verilen eğitim örneğidir.",
       "sections": [
-        {"heading": "Verilen zafiyet kaydı - yalnız eğitim senaryosu [F1]", "paragraph": "[V] Bileşen: Component X (PLC firmware kütüphanesi); sürüm: 2.4; kayıt: CVE-XXXX-XXXX (yer tutucu, gerçek CVE değil); önem: Critical / CVSS 9.8; yama: mevcut varsayılıyor. CVSS sürümü/vektörü ve yama paketi verilmemiştir. Bu bilgiler Karmetal'e atanmaz. CVSS ciddiyet puanıdır; tek başına makinenin riskini göstermez [K9]."},
-        {"heading": "Görev 1 - bu CVE gerçekten etkiliyor mu? Üç koşul", "table": {
-          "widths": [0.20, 0.22, 0.58],
-          "headers": ["Kontrol", "Sonuç", "Eksik kanıt / karar"],
-          "rows": [
-            ["Bileşen var mı?", "[B] Bilinmiyor", "Modelle eşleşen SBOM / bağımlılık listesi yok; Component X varlığı kanıtlanmadı."],
-            ["Sürüm etkileniyor mu?", "[B] Bilinmiyor", "Gerçek sürüm ve üretici güvenlik duyurusu yok; 2.4 yalnız senaryo verisi."],
-            ["Açık ulaşılabilir mi?", "[B] Bilinmiyor", "Arayüz, yetki ve tetiklenme koşulları doğrulanmadı; internet erişimi tek ölçüt değil."]
+        {
+          "heading": "Verilen zafiyet kaydı",
+          "paragraph": "Bileşen: Component X (PLC firmware kütüphanesi). Sürüm: 2.4. CVE: CVE-XXXX-XXXX. Önem: Critical (CVSS 9.8). Yama: mevcut. Bu bilgiler makinede doğrulanmadı; CVE-XXXX-XXXX gerçek bir kayıt numarası değildir."
+        },
+        {
+          "heading": "Görev - karar akışı",
+          "qa": [
+            [
+              "1. Bu CVE sizi gerçekten etkiliyor mu? Üç şartı kontrol edin.",
+              "Kesin olarak söyleyemem. Birincisi, Component X makinede var mı bilinmiyor. İkincisi, gerçek sürüm bilinmediği için etkilenip etkilenmediği belli değil. Üçüncüsü, bu açığa ulaşılabilen bir bağlantı veya işlem olup olmadığı bilinmiyor. Sonuç: etkilenme durumu belirsiz."
+            ],
+            [
+              "2. Üretimi hemen durdurur musunuz? Neden / neden değil?",
+              "Yalnız 9.8 puanına bakarak hemen durdurma kararı vermem. Önce açığın bu makineyi etkileyip etkilemediği incelenmelidir. Ancak beklenmeyen hareket veya emniyet işlevinin bozulduğu görülürse yetkili ekip makineyi güvenli biçimde durdurmalıdır."
+            ],
+            [
+              "3. Yamayı doğrudan mı uygularsınız, önce test mi? Nerede?",
+              "Önce üretimden ayrı, aynı donanım ve sürümü temsil eden bir test ortamında denenmesini öneririm. Üreticinin yaması ve uyumluluk bilgisi kontrol edilmeli; mevcut ayarların yedeği ve geri dönüş planı hazırlanmalıdır. Bu çalışmada gerçek yama uygulanmadı."
+            ],
+            [
+              "4. Bu yama bir safety validation etkiliyor mu? Nasıl anlarsınız?",
+              "Koruma işlevlerini etkileyebilir; değişiklikler incelenmeden kesin söylenemez. Yama açıklamaları ve devre bilgisi kontrol edilir. Etkilenen kapak/şerit duruşu, yeniden başlatma ve güvenli tutma işlevleri yetkili kişilerce yeniden doğrulanır."
+            ],
+            [
+              "5. Yama mümkün değilse telafi edici önlem ne olur?",
+              "Varsa gereksiz bakım bağlantısı kapatılabilir. Gerekli erişim belirli kişilere ve süreye sınırlandırılır; ayar değişiklikleri izlenir. Bunlar açığı ortadan kaldırmaz. Emniyet sağlanamıyorsa makine çalıştırılmaz."
+            ]
           ]
-        }},
-        {"heading": "Görev 2-5 - karar akışı", "qa": [
-          ["2. Üretimi hemen durdurur musunuz?", "[Ö] Yalnız 9.8 puanı/yer tutucu nedeniyle otomatik duruş kararı verilmez. Bu, üretime devam onayı değildir. Emniyet kaybı, yetkisiz değişiklik veya beklenmeyen hareket belirtisinde yetkili işletme ekibi kontrollü güvenli duruşa geçer; kayıtları korur ve servis yolunu sınırlar."],
-          ["3. Yamayı doğrudan mı, önce test ederek mi uygularsınız? Nerede?", "[Ö] Önce üretimden ayrılmış, aynı donanım/sürümü temsil eden yetkili test düzeneğinde. Üreticinin paket kaynağı ve bütünlüğü, uyumluluk, yedek/geri dönüş ve regresyon sonuçları doğrulanır. Temsilî düzenek yoksa başarı varsayılmaz; üretime körlemesine yüklenmez. Bu projede yama testi/kurulumu yapılmadı [K5]."],
-          ["4. Yama emniyet validasyonunu etkiler mi? Nasıl anlaşılır?", "[B] Değişiklik kapsamı bilinmiyor. [Ö] Sürüm notları, devre ve bağımlılık incelemesiyle kapak/şerit duruşu, tepki süresi, reset ve yük tutma etkisi belirlenir. Yetkili uzman etkilenen fonksiyonları yeniden doğrular; salt üretim çalışıyor gözlemi yeterli değildir [K5]."],
-          ["5. Yama mümkün değilse telafi edici önlem nedir?", "[Ö] Varsa gereksiz servis yolunu kapat; gerekli erişimi süreli, kişisel ve en az yetkili yap; servis cihazını denetle ve konfigürasyon değişikliklerini izle. Süreli risk kararı, sorumlu ve gözden geçirme tarihi kaydedilsin. Önlemler açığı gidermez; emniyet gösterilemiyorsa duruş sürdürülür."]
-        ]},
-        {"heading": "Vulnerability Decision - sonuç ve kanıt paketi", "paragraph": "VD-05 / durum: AÇIK - etkilenme belirsiz; doğrulanmış zafiyet yok. [Ö] EP 09: üretici, bileşen adı/sürümü, tanımlayıcı ve bağımlılık kanıtını kaydet; bilinmeyeni açık yaz [K8]. EP 10: gerçek duyuru ile bileşen/sürüm/erişim eşlemesi. EP 11: yama, geri dönüş ve emniyet test kayıtları. Sorumlu önerisi: işletmenin bakım + emniyet yetkilisi; öğrenci belge takibini yapar. Yeni kanıt/duyuru gelince veya sonraki laboratuvar öncesi yeniden incele."}
+        }
       ],
-      "refs": ["F1", "K1", "K5", "K8", "K9"],
-      "note": "SBOM: yazılım malzeme listesi. Yukarıdaki tablo tam SBOM değildir. Ağ taraması ve gerçek sisteme müdahale yapılmadı."
+      "refs": [
+        "F1",
+        "K1",
+        "K5",
+        "K9"
+      ],
+      "note": ""
     },
     {
       "id": 6,
-      "date": "06.11.2026",
       "filename": "Lab6_CRA_Incident_Simulation.pdf",
       "title": "CRA Incident Simulation",
       "output": "Incident Workflow",
       "ep": "EP 13 - Incident Response",
       "source_page": 7,
-      "context": "[V] Saat 10:15: servis hesabında yetkisiz erişim alarmı; PLC ayarları değişmiş olabilir, makine çalışıyor [F1]. [B] Gerçek servis hesabı/ağı bilinmiyor. Bu, olay tespiti değil, masa başı müdahale planıdır.",
+      "context": "Varsayımsal olay: Saat 10:15’te servis hesabında yetkisiz erişim görülüyor. PLC ayarları değişmiş olabilir ve makine çalışıyor. Vardiya sorumlusu olduğumu varsayıyorum. Gerçek makinede böyle bir olay tespit edilmedi.",
       "sections": [
-        {"heading": "Görev - beş aşamalı zaman çizgisi [Ö]", "qa": [
-          ["1. 10:15-10:30 / ilk 15 dakika: kim aranır, ilk üç eylem?", "Vardiya sorumlusu bakım/emniyet yetkilisini ve OT olay sorumlusunu bilgilendirir. (1) İnsanları tehlike alanından uzaklaştır; emniyet gösterilemiyorsa yetkili ekip kontrollü güvenli duruş ve yük tutmayı sağlar. (2) Şüpheli servis oturumunu güvenli biçimde sınırla. (3) Alarmı, saati ve ilk gözlemleri kaydet; rutin reset/yeniden başlatma yapma. Önce insan emniyeti [K5]."],
-          ["2. İlk 2 saat: emniyet, kanıt ve hangi hesap?", "Bakım yetkilisi kapak/şerit duruşu, reset ve konfigürasyon bütünlüğünü onaylı referansla inceler; üretimde tehlikeli deneme yapmaz. OT sorumlusu şüpheli servis hesabını askıya alır, açık oturum ve varsa erişim anahtarlarını iptal eder. Mevcut erişim/PLC/HMI kayıtlarını ve ayar kopyalarını salt okunur saklar; hash, saat dilimi, kopyalayan kişi ve teslim zincirini kaydeder. Kanıt toplama emniyeti geciktirmez."],
-          ["3. En geç 24 saat: erken uyarıda ne hazır olmalı?", "Üreticinin yetkili olay/uyum ekibi kapsamı ve bildirim eşiğini değerlendirir. Kapsam ve eşik sağlanırsa gecikmeden, en geç farkındalıktan 24 saatte erken uyarı: ürün, farkındalık zamanı, kötü niyet şüphesi ve bilinen ilgili AB ülkeleri. Eksik ayrıntı kesinleşene kadar beklenmez. İşletme kanıtı üreticiye aktarır; öğrenci resmî bildirim yapmaz [K10, K11]."],
-          ["4. En geç 72 saat: etki, kök neden ve görev dağılımı?", "OT ekibi erişim ve değişiklik izini; bakım/emniyet ekibi fiziksel etkiyi ve duruş durumunu araştırır. Üretici bildirim sorumlusu ilk etki değerlendirmesini, ürün bilgisini, alınan/önerilen önlemleri sunar. Kök neden henüz kanıtlanmadıysa açıkça belirsiz yazılır; 72 saatin dolması beklenmez. SRP üzerinden ilgili koordinatör CSIRT ve ENISA akışı izlenir [K10, K11]."],
-          ["5. 14. gün: rapor ve korunacak kayıtlar?", "Föydeki 14. gün bu çalışmada ara değerlendirmedir; her olayın yasal son rapor tarihi değildir. Erişim/oturum izleri, varsa PLC/HMI kayıtları, önce-sonra ayarlar, hash'ler, olay çizelgesi, onaylar ve geri dönüş/validasyon sonuçları korunur. Rapor; doğrulanmış neden, fiziksel/üretim etkisi, önlemler ve açık işleri ayırır. Kayıtların var olduğu varsayılmaz; eksikliği yazılır."]
-        ]},
-        {"heading": "CRA süreleri - olay türünü ayır [K10, K11]", "table": {
-          "widths": [0.32, 0.68],
-          "headers": ["Bildirim türü", "Nihai rapor için üst süre"],
-          "rows": [
-            ["Aktif istismar edilen zafiyet", "Düzeltici veya azaltıcı önlem kullanılabilir olduktan sonra en geç 14 gün."],
-            ["Ürün güvenliğini etkileyen ciddi olay", "72 saatlik olay bildiriminin sunulmasından sonra bir ay içinde."]
+        {
+          "heading": "Görev - zaman çizgisini doldurun",
+          "qa": [
+            [
+              "1. 10:15 - ilk 15 dakika: kimi ararsınız, ilk üç eyleminiz?",
+              "Bakım/emniyet sorumlusunu ve bilgi işlem ekibini ararım. İlk üç eylemim: insanları tehlike alanından uzaklaştırmak ve gerekiyorsa yetkili ekiple güvenli duruşu sağlamak; şüpheli servis erişimini kesmek; alarm saatini ve ilk gözlemleri kaydetmek olur. Rutin reset atıp devam etmem."
+            ],
+            [
+              "2. İlk 2 saat: emniyet güvende mi, neyi korursunuz, hangi hesap kapatılır?",
+              "Kontrol edilmeden emniyetin güvende olduğunu söylemem. Bakım ekibi duruş ve koruma ayarlarını inceler. Şüpheli servis hesabı ve açık oturumları kapatılır. Varsa bağlantı kayıtları, PLC/panel kayıtları ve ayar kopyaları değiştirilmeden saklanır; kimin ne zaman aldığı not edilir. Önce insan emniyeti sağlanır."
+            ],
+            [
+              "3. 24 saat - CRA erken uyarısı için hangi bilgi hazır olmalı?",
+              "Olayın fark edilme zamanı, ürün bilgisi, kötü niyet şüphesi ve bilinen ilgili AB ülkeleri hazır olmalıdır. Makine CRA kapsamındaysa ve bildirim şartı oluşmuşsa üretici, haberdar olduktan sonra gecikmeden ve en geç 24 saatte erken uyarı verir. Bu makinenin kapsamı doğrulanmadığı için bildirim burada koşullu bir örnektir."
+            ],
+            [
+              "4. 72 saat - kök neden, etki ve önlem için kim ne yapar?",
+              "Bilgi işlem ekibi erişim izlerini, bakım ekibi ayarları ve fiziksel etkiyi inceler. Üretici, yetkili siber olay ekibine ve AB siber güvenlik ajansı ENISA’ya ortak bildirim platformundan bilgi verir. İlk etki ve önlemler açıklanır; kök neden belli değilse bu yazılır. Süre, üreticinin haberdar oluşundan 72 saattir; erken uyarıya ek 72 saat değildir."
+            ],
+            [
+              "5. 14 gün - rapor için hangi kayıtlar korunmuş olmalı?",
+              "Erişim ve oturum kayıtları, varsa PLC/panel kayıtları, eski-yeni ayarlar, yapılan işlemler ve alınan önlemler korunmuş olmalıdır. 14. gün için rapor taslağı gözden geçirilir. Ancak CRA’da aktif istismar edilen zafiyetin son raporu önlem hazır olduktan sonra en geç 14 gün; ciddi olayın son raporu ise 72 saatlik bildirim sunulduktan sonra bir ay içindedir. Föydeki 14 gün her olay için aynı yasal süre değildir."
+            ]
           ]
-        }},
-        {"heading": "Koşullu kapsam ve yeniden başlatma kararı", "paragraph": "[B] AB piyasası/ürün kapsamı ve bildirim eşiği doğrulanmadı; her erişim alarmı otomatik CRA bildirimi değildir. 24/72 saat üreticinin ilgili olay/zafiyetten haberdar oluşundan sayılır; 10:15 alarmı ile aynı an olduğu varsayılmaz. Madde 14, 11.09.2026'dan uygulanır [K11]. [Ö] Bağımsız emniyet, onaylı ayarlar ve yetkiler doğrulanıp yetkili işletme ekibi yazılı onay vermeden yeniden başlatma yok."}
+        }
       ],
-      "refs": ["F1", "K5", "K10", "K11"],
-      "note": "EP 13: müdahale akışı ve kanıt listesi hazırdır; gerçek olay, resmî bildirim veya uygulanmış müdahale yoktur."
+      "refs": [
+        "F1",
+        "K5",
+        "K10",
+        "K11"
+      ],
+      "note": ""
     },
     {
       "id": 7,
-      "date": "06.11.2026",
       "filename": "Lab7_AI_Safety_Challenge.pdf",
       "title": "AI Safety Challenge",
       "output": "AI Fail-Safe Decision",
       "ep": "EP 03 + EP 15",
       "source_page": 8,
-      "context": "[B] K1'de YZ/kamera sistemi doğrulanmıyor. [V] Kesilecek malzemeyi kamerayla OK/RED sınıflandıran yardımcı YZ eklendiğini varsayıyoruz. Mevcut makine özelliği değildir; YZ tahmini emniyet garantisi vermez [F1].",
+      "context": "Bu makinede kamera veya yapay zekâ kullanıldığı doğrulanmadı. Föyü uyarlamak için kesilecek malzemeyi kamerayla OK/RED olarak değerlendiren yardımcı bir sistem varsayıyorum. Yapay zekâ kararı insanı koruyan emniyet işlevlerinin yerine geçmez.",
       "sections": [
-        {"heading": "Görev - üç başarısızlıkta güvenli davranış", "qa": [
-          ["1. Model kusurlu malzemeye OK verdi: ne yapılır?", "[V] Eğri/uygunsuz malzemeyi kabul etmek, hatalı bağlama koşuluyla birleşirse şerit sıkışmasına veya parça fırlamasına yol açabilir. [Ö] OK tek başına kesim başlatmaz; yerel operatör ve bağımsız ölçü/bağlama kontrolü gerekir. Şüphede sonraki çevrim engellenir, hareket varsa doğrulanmış duruş uygulanır. Kör örneklem kontrolü ve hatalı OK takibi yapılır; yüksek güvenli tahmin de yanlış olabilir."],
-          ["2. Kamera girdisi bozuk/sahte: nasıl fark edilir, ne yapılır?", "[Ö] Kaynak kimliği/bütünlüğü, kare zaman damgası ve sıra bilgisi, donmuş görüntü, bulanıklık ve bağımsız sensör tutarlılığı izlenir. Geçersiz veya eski karede YZ önerisi reddedilir, alarm ve kanıt kaydı üretilir; güvenli bekleme ve yerel inceleme gerekir. Bu kontroller tüm manipülasyonları yakalama garantisi vermez. Kayıtlı eski OK sonucu kullanılmaz."],
-          ["3. Confidence düştü: eşik ve eşik altı davranış?", "[Ö] Güven eşiği tau, temsilî doğrulama verisinde hatalı OK oranı ve fiziksel risk dikkate alınarak belirlenmeli; model skoru tek başına doğruluk olasılığı sayılmaz. [B] Veri/kalibrasyon olmadığı için sayısal eşik atanmadı; belirlenene kadar otomatik kabul kapalı. Eşik altında, eksik/geçersiz skorda veya dağılım dışı girdide çevrim izni verilmez; alarm, yerel insan incelemesi ve doğrulanmış fallback uygulanır [K12]."]
-        ]},
-        {"heading": "Karar tablosu - AI Fail-Safe Decision [Ö]", "table": {
-          "widths": [0.25, 0.49, 0.26],
-          "headers": ["Başarısızlık", "Tanımlanan güvenli davranış", "Kavram"],
-          "rows": [
-            ["Yanlış OK", "Bağımsız kontrol ve yerel onay; tehlikeli çevrimi engelle.", "Human override / monitoring"],
-            ["Manipüle girdi", "Geçersiz öneriyi reddet; güvenli bekle, incele ve kaydet.", "Fail-safe / monitoring"],
-            ["Düşük confidence", "Otomatik kabul yok; yerel incelemeye geç. Son OK'yi kullanma.", "Confidence threshold / fallback"]
+        {
+          "heading": "Görev - üç başarısızlıkta güvenli davranış",
+          "qa": [
+            [
+              "1. Model yanlış sınıflandırdı: kusurlu parçaya OK verdi. Sistem ne yapmalı?",
+              "OK sonucu tek başına kesimi başlatmamalıdır. Operatör ve bağımsız ölçü/bağlama kontrolüyle malzeme tekrar kontrol edilmelidir. Şüpheli durumda sonraki kesim engellenir; tehlikeli hareket varsa güvenli duruş sağlanır. İnsan onayı, kapak ve diğer emniyet korumalarını devre dışı bırakamaz."
+            ],
+            [
+              "2. Girdi manipüle edildi: kamera verisi bozuk/sahte. Nasıl fark edilir, ne yapılır?",
+              "Görüntünün kaynağı ve zamanı, donmuş veya bulanık olup olmadığı ve diğer ölçümlerle uyumu kontrol edilir. Şüpheli görüntüyle karar verilmez; yeni kesim bekletilir ve operatör inceleme yapar. Bu kontroller her sahte girdiyi yakalayamayacağı için emniyet yolu bağımsız kalmalıdır."
+            ],
+            [
+              "3. Confidence düştü: eşik ne olmalı? Altında ne yapılır?",
+              "Güven eşiği, gerçek kullanım koşullarını temsil eden testlerle belirlenmelidir. Veri olmadığı için rastgele bir sayı vermiyorum. Eşik belirlenene kadar otomatik kabul yapılmaz. Eşik altında veya skor yoksa sistem güvenli biçimde bekler ve operatöre sorar. Gerekirse yapay zekâ olmadan, önceden güvenliği doğrulanmış yerel çalışma düzenine dönülür."
+            ]
           ]
-        }},
-        {"heading": "Bağımsız emniyet ve kabul ölçütü", "paragraph": "[Ö] YZ/iletişim arızası; kapak/şerit duruşunu, yük tutmayı veya yerel yeniden başlatma şartını devre dışı bırakamamalı. Human override yalnız YZ önerisini iptal eder; emniyet kilidini aşmaz. Fallback, YZ'siz ve risk değerlendirmesiyle doğrulanmış yerel işletimdir; bu koşul yoksa güvenli bekleme sürer. Üç hata sınıfı, yüksek güvenli yanlış OK ve YZ kapalı durumu ayrı test edilmeden kullanım onayı verilmez [K5, K12]."},
-        {"heading": "EP 03 + EP 15 - kaydedilecek kanıt", "paragraph": "[Ö] Model/veri sürümü, girdi zamanı ve bütünlük sonucu, skor/eşik, karar ve gerekçesi, yerel onay, emniyet tepkisi ve test sonucu kaydedilir. Eşik ve algılama süreleri ölçümle doğrulanacak açık gereksinimlerdir. Durum: kavramsal karar tablosu hazır; model geliştirme, performans ölçümü ve gerçek makine testi yapılmadı."}
+        },
+        {
+          "heading": "Karar tablosu - AI Fail-Safe Decision",
+          "table": {
+            "widths": [
+              0.26,
+              0.74
+            ],
+            "headers": [
+              "Başarısızlık",
+              "Tanımlanan güvenli davranış ve kullanılan kavram"
+            ],
+            "rows": [
+              [
+                "Model yanlış sınıflandırdı",
+                "İkinci kontrol ve insan onayı. Human override: insan yapay zekâ kararını iptal eder; emniyet korumasını aşmaz."
+              ],
+              [
+                "Girdi manipüle edildi",
+                "Monitoring: görüntü ve diğer ölçümler izlenir. Fail-safe: şüphede yeni kesim engellenir, sistem güvenli bekler."
+              ],
+              [
+                "Confidence düştü",
+                "Confidence threshold: doğrulanmış eşik altında kabul yok. Fallback: yalnız güvenliği doğrulanmış yerel düzene dönülür; bu mümkün değilse beklenir."
+              ]
+            ]
+          }
+        }
       ],
-      "refs": ["F1", "K1", "K5", "K12"],
-      "note": "Öneri, NIST AI RMF rehberindeki güvenli hata/izleme yaklaşımıyla ilişkilidir; emniyet sertifikası iddiası içermez."
+      "refs": [
+        "F1",
+        "K1",
+        "K12"
+      ],
+      "note": ""
     }
-  ]
+  ],
+  "student": "Hüseyin Enes Ertürk",
+  "group": "Yazılım Gece B"
 }

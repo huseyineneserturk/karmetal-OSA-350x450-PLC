@@ -1,5 +1,7 @@
 # Laboratuvarlar - kalite kontrol kaydı
 
+**Güncel sürüm:** En sondaki “Sadeleştirilmiş yedi föy” bölümü geçerlidir. Önceki kayıtlar önceki PDF sürümlerine aittir; eski boş kimlik alanları ve dosya özetleri güncel dosyaları tanımlamaz.
+
 Kontrol tarihi: **25.10.2026**. Bu kayıt belgelerin kalitesine ilişkindir; makinede emniyet veya siber güvenlik testi yapıldığı anlamına gelmez.
 
 ## Gereksinim eşlemesi
@@ -87,3 +89,31 @@ Son 6-7. hafta PDF'leri Poppler ile 1600 piksel uzun kenarlı PNG'ye dönüştü
 Lab 1'in emniyet fonksiyonları ve bilgi eksikleri, Lab 2/4'ün koşullu erişim mimarisi, Lab 3'ün senaryoları, Lab 5'in belirsiz etkilenme kararı, Lab 6'nın koşullu olay akışı ve Lab 7'nin varsayımsal YZ yolu karşılaştırıldı. Makine için yeni PLC/firmware, gerçek CVE, uzaktan erişim, Safety PLC/STO veya YZ varlığı iddia edilmedi. EP eşleşmeleri F1 ile uyumlu. Kaynak kaydı ve README yedi ayrı çıktıyı içeriyor; SWOT/SMART ve Trello görev taslağı güncellendi.
 
 Belge seti hazırdır. Öğrenci kimlik alanları, öğrenci incelemesi ve kör test oturumu açık kalır; canlı Trello panosu veya gerçek sistem testi yapılmış sayılmaz.
+
+## Sadeleştirilmiş yedi föy - 06.11.2026
+
+Öğrencinin isteğiyle yedi teslim PDF'si aynı makine için yeniden yazıldı. Ana başlıklar, soru sırası ve istenen çıktılar korundu. Fazladan kabul ölçütü, kanıt paketi, takip/sorumlu ve benzeri analiz bölümleri çıkarıldı. Kaynak ve bilgi durumu kodları PDF'lerden kaldırıldı; kaynak listesi depoda tutuldu. Bilinmeyenler ve varsayımlar normal cümlelerle belirtildi. Föyde geçen teknik terimler gerektiğinde Türkçe açıklandı.
+
+| Hafta | Föyde istenen kapsam | Kontrol |
+|---|---|---|
+| 1 | 8 yanıt, normal kontrol ve emniyet yolu haritası | Tamam |
+| 2 | 3 yanıt, bölge/bağlantı şeması, 6 satır erişim kararı | Tamam |
+| 3 | 3 senaryo, L x S x E hesabı, öncelik, 2 yanıt ve S=3 kuralı | Tamam |
+| 4 | Mevcut/hedef için 5 ilke ve bağımsızlıkla ilgili 2 yanıt | Tamam |
+| 5 | Verilen örnek zafiyet kaydı ve 5 yanıt | Tamam |
+| 6 | Olay senaryosu ve 5 zaman adımı; süre düzeltmesi ilgili yanıt içinde | Tamam |
+| 7 | Varsayımsal akış, 3 yanıt ve 3 satır karar tablosu | Tamam |
+
+Yedi PDF de tek sayfa olarak üretildi ve son sürümlerinin tüm sayfaları Poppler görüntüleri üzerinden incelendi. Ad Soyad **Hüseyin Enes Ertürk**, Grup **Yazılım Gece B** olarak dolu. Kimlik alanları interaktif tutuldu. `pypdf` ile hem kanonik alan değerleri hem widget görünüm akışlarından çıkarılan metin kontrol edildi; iki gösterimde de Türkçe bilgiler birebir eşleşti. Sayfa başlığı, tarih, EP eşleşmesi, soru sayısı, tablo satırları ve risk çarpımları doğrulandı. PDF metinlerinde ek kaynak/bilgi kodları bulunmadığı ve yerel Markdown bağlantılarının geçerli olduğu kontrol edildi. `git diff --check` geçti.
+
+| Hafta | Güncel SHA-256 |
+|---|---|
+| 1 | `06a6e1edc56befa62e5c68068f0f83264693f7002bbb7b9174bd0bf013ee26eb` |
+| 2 | `b6ae108b40e29f490c6a6cc474f09cf78909a652b4931f49420b7fb406a65c2a` |
+| 3 | `3d78d4aaffd7c8a9c7c7e8a8e43399c4d39740eecf6cd05c0e778c0489113e4f` |
+| 4 | `4a74747bd093261b89f6dc3e5e782c3b1c586a7ea6eb4056f4044e725200bf80` |
+| 5 | `9e0bfb7dcf608e976750ba48c0e1db4b4a68f91380be4373b7491f2332ed4b6c` |
+| 6 | `69caad88266e51e8d57d5e385d765e354cc527d560111ef3f319caf3304496ff` |
+| 7 | `b9ba560ec87f959e415d1c0ec9b4d2947374d79e3d1d4a9333ae95af06afc3e0` |
+
+Özgün kaynak PDF'leri değiştirilmedi. Bu kayıt belge kontrolüdür; kör test veya gerçek makine deneyi yapılmış sayılmaz. Sıradaki adım öğrencinin sadeleştirilmiş föyleri okumasıdır.

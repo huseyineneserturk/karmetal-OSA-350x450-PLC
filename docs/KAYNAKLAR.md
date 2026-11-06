@@ -1,5 +1,7 @@
 # Kaynaklar ve bilgi eksikleri
 
+**Güncel PDF sunumu (06.11.2026):** Kaynak kodları ve B/V gibi işaretler teslim PDF'lerinden çıkarıldı. Bilgi eksikleri ve varsayımlar cümlelerle belirtiliyor. Aşağıdaki kaynak kodları yalnız depo içindeki araştırma takibi içindir. PDF'ler yalnız föyde istenen görevleri içerir; ayrıntılı kaynak/araştırma kayıtları burada korunur.
+
 Araştırma/kayıt tarihi: **25.10.2026**. Araştırma pasiftir. Kaynak bağlantıları, erişim tarihi ve kaynağın hangi iddiayı desteklediği kaydedilmiştir. Tam web sayfaları depoda yeniden yayımlanmamıştır; içerik gelecekte değişebilir.
 
 **5. hafta güncellemesi: 01.11.2026.** K1 ve K5 yeniden incelendi; K8/K9 aşağıdaki kayda eklendi. K1 ürün sayfası PLC/firmware sürümü veya modele özgü SBOM vermiyor. Bu, böyle bir belgenin hiçbir yerde bulunmadığı iddiası değildir.
