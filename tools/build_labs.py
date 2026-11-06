@@ -34,6 +34,9 @@ SOURCES = {
     'K5': ('NIST SP 800-82 Rev.3', 'https://csrc.nist.gov/pubs/sp/800/82/r3/final'),
     'K8': ('SBOM 2026 rehberi', 'https://www.cyber.gov.au/publication/2026-minimum-elements-for-a-software-bill-of-materials-sbom'),
     'K9': ('FIRST CVSS rehberi', 'https://www.first.org/cvss/user-guide.html'),
+    'K10': ('ENISA CRA SRP SSS', 'https://www.enisa.europa.eu/topics/product-security/vulnerability-services/eu-incident-response-and-cyber-crisis-management/single-reporting-platform-srp/frequently-asked-questions'),
+    'K11': ('AB Komisyonu CRA bildirim', 'https://digital-strategy.ec.europa.eu/en/policies/cra-reporting'),
+    'K12': ('NIST AI RMF 1.0', 'https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf'),
     'F1': ('Dersin Lab Föyleri PDF dosyası, s. 2-5 (yerel)', None),
 }
 
@@ -77,6 +80,19 @@ def arrow(c, x1, y1, x2, y2, label=None):
         c.drawCentredString((x1+x2)/2, H-y1+5, label)
 
 def diagram(c, lab, top):
+    if lab['id'] == 7:
+        top = heading(c, 'Varsayımsal yardımcı YZ yolu [V] / önerilen sınırlar [Ö]', top)
+        positions = [M, M+137, M+274, M+411]
+        widths = [112, 112, 112, CW-411]
+        for x, width, title, subtitle in zip(positions, widths,
+                ['Kamera / girdi', 'YZ önerisi', 'Bağımsız kontrol', 'Normal PLC'],
+                ['bütünlük kontrolü', 'OK / RED + skor', '+ yerel teyit', 'çevrim isteği']):
+            box(c, x, top, width, 29, title, subtitle, LIGHT)
+        for i in range(3):
+            arrow(c, positions[i]+widths[i], top+15, positions[i+1], top+15)
+        top += 35
+        box(c, M, top, CW, 25, 'Emniyet yolu YZ dışında: kapak / şerit duruşu + güvenli tutma + yerel yeniden başlatma [Ö]', fill=NAVY)
+        return top+33
     if lab['id'] == 1:
         top = heading(c, 'İşlevsel harita - gerçek bağlantı şeması değildir', top)
         cols = [(M, 147), (M+163, 155), (M+334, CW-334)]

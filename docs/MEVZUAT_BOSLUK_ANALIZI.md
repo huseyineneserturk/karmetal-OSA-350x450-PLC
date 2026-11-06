@@ -29,4 +29,13 @@ Makine Tüzüğü için AB pazarına arz/hizmete sunma, tarih, ürün sınıfı 
 | CRA zafiyet yönetimi | Bileşen envanteri, destek, bildirim ve düzeltme süreci | SBOM/firmware yok | Lab 5-6'da koşullu süreç hazırla |
 | CE/teknik dosya | İlgili mevzuata göre uygunluk değerlendirmesi ve beyan | Modele/varyanta özgü dosya yok | Belgelendirilmiş uygunluk iddia etme |
 
-Gelecek Lab 6'da CRA bildirim süreleri olay türüne göre ayrı okunmalıdır: aktif istismar edilen zafiyetin nihai raporu ile ciddi olayın nihai raporu aynı başlangıç noktasına bağlanmaz. Genel föydeki “14 gün” satırı her olaya otomatik uygulanmamalıdır. Bu teslimde olay bildirimi yapılmamış ve gerçek olay tespit edilmemiştir.
+## Lab 6 için bildirim takvimi kontrolü - 06.11.2026
+
+| Süre | Başlangıç / koşul |
+|---|---|
+| Erken uyarı: gecikmeden, en geç 24 saat | Kapsam ve bildirim eşiği sağlandığında üreticinin ilgili aktif istismar/ciddi olaydan haberdar oluşu |
+| Bildirim: gecikmeden, en geç 72 saat | Aynı farkındalık anı; erken uyarıdan sonra ilave 72 saat değil |
+| Aktif istismar edilen zafiyet nihai raporu: en geç 14 gün | Düzeltici veya azaltıcı önlem kullanılabilir olduktan sonra |
+| Ciddi olay nihai raporu: bir ay içinde | 72 saatlik olay bildiriminin sunulmasından sonra; tespitten 14 gün değil |
+
+Kaynaklar: [ENISA SRP SSS](https://www.enisa.europa.eu/topics/product-security/vulnerability-services/eu-incident-response-and-cyber-crisis-management/single-reporting-platform-srp/frequently-asked-questions), [Komisyon bildirim açıklaması](https://digital-strategy.ec.europa.eu/en/policies/cra-reporting). Kapsam/bildirim eşiği kararı üreticinin yetkili ekibine aittir; öğrenci çalışması bu kararı vermez. Bu nedenle Lab 6'daki 10:15 alarmı ile üreticinin farkındalık anı aynı sayılmadı. Bildirim sorumluluğu, öğrenciye veya yalnız vardiya sorumlusuna yüklenmedi. SRP'de seçilecek koordinatör CSIRT, ilgili yerleşiklik/temsil koşullarına göre belirlenir; üreticinin Türkiye'de olması nedeniyle rastgele bir AB ülkesine atama yapılmadı. Gerçek olay/bildirim yoktur.

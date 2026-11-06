@@ -1,4 +1,4 @@
-# İlk dört hafta - kalite kontrol kaydı
+# Laboratuvarlar - kalite kontrol kaydı
 
 Kontrol tarihi: **25.10.2026**. Bu kayıt belgelerin kalitesine ilişkindir; makinede emniyet veya siber güvenlik testi yapıldığı anlamına gelmez.
 
@@ -58,3 +58,32 @@ Son PDF Poppler ile 1600 piksel uzun kenarlı PNG'ye çevrilip sayfanın tamamı
 Lab 5 SHA-256: `f7471be57342cc823b02133fcce4ca097648b45b902d7b12774187b32048306c`.
 
 Bu kontroller belge kalitesi içindir. Gerçek makine testi, yama kurulumu ve kör test oturumu yapılmadı.
+
+## 5-6-7. hafta teslim kontrolü - 06.11.2026
+
+5. haftanın beş görevi ve tek sayfalık PDF'si yeniden incelendi; önceki onaylı dosya korundu. 6 ve 7. haftalar ayrı dosyalar olarak üretildi. Üçü de `output/pdf/` altında ayrı PDF'dir.
+
+| Gereksinim | Sonuç |
+|---|---|
+| Lab 6 / F1 PDF sayfa 7 | Beş zaman adımı ayrı yanıtlandı: ilk 15 dakika, ilk 2 saat, 24 saat, 72 saat, 14. gün. |
+| Lab 6 / kanıt ve emniyet | Önce insan emniyeti; log/ayar/hash/teslim zinciri ve eksik kayıt bilgisi; yetkili rol ve yeniden başlatma koşulları mevcut. |
+| Lab 6 / CRA | Kapsam ve eşik koşullu. Üretici farkındalığı ile 10:15 alarmı ayrıldı. 14 gün / bir ay nihai rapor ayrımı, ENISA ve Komisyon açıklamalarıyla kontrol edildi. |
+| Lab 6 / çıktı | Incident Workflow / EP 13. Gerçek olay veya gönderilmiş bildirim iddiası yok. |
+| Lab 7 / F1 PDF sayfa 8 | Yanlış OK, manipüle girdi ve düşük güven için üç ayrı yanıt ve üç satırlı karar tablosu mevcut. |
+| Lab 7 / bağımsızlık | YZ dışı emniyet yolu ve yerel teyit; insan müdahalesi emniyet kilidini aşmaz. |
+| Lab 7 / kanıt sınırı | Kamera/YZ varsayımsal. Güven eşiği, performans ve tepki süreleri uydurulmadı; doğrulama ihtiyacı açık. |
+| Lab 7 / çıktı | AI Fail-Safe Decision / EP 03 + EP 15. Gerçek model veya saha testi sonucu iddiası yok. |
+
+Son 6-7. hafta PDF'leri Poppler ile 1600 piksel uzun kenarlı PNG'ye dönüştürüldü ve iki sayfanın tamamı gözle incelendi. Başlıklar, şema, tablolar, kaynaklar ve dipnotlarda taşma/çakışma görülmedi. 5. hafta da görsel olarak yeniden incelendi. Yedi PDF'nin tamamında `pypdf` ile bir sayfa, doğru başlık/tarih/EP, iki boş interaktif kimlik alanı, widget görünüm akışları ve beklenen bağlantı sayıları doğrulandı. İlk beş PDF önceki Git commit'iyle bayt düzeyinde aynı bulundu. Yerel Markdown bağlantıları ile `git diff --check` kontrolü geçti.
+
+| Hafta | SHA-256 |
+|---|---|
+| 5 (korundu) | `f7471be57342cc823b02133fcce4ca097648b45b902d7b12774187b32048306c` |
+| 6 | `5903e31af025a0ab8b5e11a834219e828dc1e53287f4ac89a2f28ba65e5924ae` |
+| 7 | `5f7355a4c5b865a31f78fb98ca3d8611d5a63f4d501d396bff068e347aa5f148` |
+
+### Yedi haftalık tutarlılık denetimi
+
+Lab 1'in emniyet fonksiyonları ve bilgi eksikleri, Lab 2/4'ün koşullu erişim mimarisi, Lab 3'ün senaryoları, Lab 5'in belirsiz etkilenme kararı, Lab 6'nın koşullu olay akışı ve Lab 7'nin varsayımsal YZ yolu karşılaştırıldı. Makine için yeni PLC/firmware, gerçek CVE, uzaktan erişim, Safety PLC/STO veya YZ varlığı iddia edilmedi. EP eşleşmeleri F1 ile uyumlu. Kaynak kaydı ve README yedi ayrı çıktıyı içeriyor; SWOT/SMART ve Trello görev taslağı güncellendi.
+
+Belge seti hazırdır. Öğrenci kimlik alanları, öğrenci incelemesi ve kör test oturumu açık kalır; canlı Trello panosu veya gerçek sistem testi yapılmış sayılmaz.

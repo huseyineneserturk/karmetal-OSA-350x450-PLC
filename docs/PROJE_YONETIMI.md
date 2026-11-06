@@ -4,6 +4,8 @@
 
 **01.11.2026 güncellemesi:** Lab 5 ayrı föy olarak eklendi. İlk beş hafta hazır; son iki laboratuvar ve kör test oturumu henüz tamamlanmadı.
 
+**06.11.2026 güncellemesi:** Lab 5 kontrol edildi; Lab 6 ve Lab 7 ayrı tek sayfa föyler olarak tamamlandı. Yedi laboratuvarın belge kapsamı hazır. Kimlik alanları, öğrenci incelemesi ve uygulanacak kör test oturumu ayrıca açık kalıyor.
+
 ## SWOT
 
 | Boyut | Değerlendirme | Dayanak / sınır |
@@ -25,8 +27,8 @@ Takvim, geç verilmiş teslim tarihleri uydurulmadan aşama sonuna bağlanır. T
 | İlk dört föy | Bu teslim sonunda dört ayrı tek sayfa PDF; tüm Lab 1-4 görevleri ve EP eşleşmeleri var. | Hazır; görsel ve içerik kontrol kaydı ayrıca tutulur. |
 | Kanıt disiplini | Bu teslim sonunda tüm makineye özgü iddiaların kaynak veya B/V/Ö/Ç etiketi bulunsun; doğrulanmamış model/sürüm/CVE sayısı sıfır olsun. | Kaynak ve bilinmeyenler kaydı oluşturuldu. |
 | Kör masa başı oturumu | T0+7 gün içinde 4 senaryo; cevap anahtarı yanıt öncesi gösterilmeyecek; karar, gerekçe ve kanıt ihtiyacı kaydedilecek. | Planlandı; uygulanmadı. |
-| Kalan laboratuvarlar | T0+21 gün içinde Lab 5-7'nin her biri ayrı çıktı; bilinmeyen bileşenlerde CVE eşlemesi yerine karar akışı. | Lab 5, 01.11.2026'da hazırlandı; Lab 6-7 gelecek iş. |
-| Son denetim | Nihai teslimden en az 2 gün önce yedi laboratuvar için görev/kaynak/tutarlılık listesinde açık teslim hatası sıfır. | Gelecek iş; bilgi eksikleri ayrıca kalabilir. |
+| Kalan laboratuvarlar | T0+21 gün içinde Lab 5-7'nin her biri ayrı çıktı; bilinmeyen bileşenlerde CVE eşlemesi yerine karar akışı. | Lab 5, 01.11.2026; Lab 6-7, 06.11.2026'da hazırlandı. T0 kabul tarihi verilmediği için takvim başarısı iddia edilmedi. |
+| Son denetim | Nihai teslimden en az 2 gün önce yedi laboratuvar için görev/kaynak/tutarlılık listesinde açık teslim hatası sıfır. | 06.11.2026'da belge kontrolü yapıldı. Nihai teslim tarihi bilinmiyor; süre hedefi ve öğrenci onayı ayrıca izlenir. |
 
 ## Trello'ya aktarılabilir görevler
 
@@ -36,11 +38,12 @@ Canlı Trello panosu oluşturulmadı. Aşağıdaki dört liste basit iş akış�
 |---|---|---|
 | Araştırılacak | Model/varyant kılavuzu ve bileşen listesi | Kaynak kaydı veya “bulunamadı” sonucu |
 | Tamamlanan | Lab 5 SBOM/CVE/Patch | Üç koşul, beş yanıt ve koşullu karar; tam SBOM/gerçek CVE iddiası yok |
-| Araştırılacak | Lab 6 CRA Incident Simulation | Olay türüne göre doğru zaman çizgisi |
-| Araştırılacak | Lab 7 AI Safety Challenge | Üç hata durumunda güvenli davranış; YZ varlığı varsayım olarak işaretli |
-| Devam eden | Kimlik ve ders grubu alanlarını tamamla | Beş PDF'nin Ad Soyad/Grup alanları dolu |
+| Tamamlanan | Lab 6 CRA Incident Simulation | Beş zaman adımı, bildirim türü/süresi ayrımı ve EP 13 |
+| Tamamlanan | Lab 7 AI Safety Challenge | Üç hata durumunda güvenli davranış, üç satırlı karar tablosu ve EP 03/15 |
+| Devam eden | Kimlik ve ders grubu alanlarını tamamla | Yedi PDF'nin Ad Soyad/Grup alanları dolu |
 | Kontrol edilecek | İlk dört föyü öğrenci olarak gözden geçir | Soru/yanıt, kaynak ve EP eşleşmeleri incelendi |
 | Kontrol edilecek | Lab 5'i öğrenci olarak gözden geçir | Örnek kayıt ile gerçek makine bilgisinin ayrımı incelendi |
+| Kontrol edilecek | Lab 6-7'yi öğrenci olarak gözden geçir | Bildirim eşiği/süreleri ve YZ varsayımları incelendi |
 | Kontrol edilecek | Kör senaryo oturumu | Dört yanıt, gizli anahtarla değerlendirme ve sonuç kaydı |
 | Tamamlanan | Makine seçimi ve çakışmama teyidi | Öğrencinin 25.10.2026 teyidi kayıtlı; bağımsız liste kontrolü değil |
 | Tamamlanan | Kaynak/bilgi açığı ve ilk dört föy | Dosyalar depoda; kalan haftalar hazır gibi gösterilmez |
@@ -53,10 +56,12 @@ Canlı Trello panosu oluşturulmadı. Aşağıdaki dört liste basit iş akış�
 - [x] Lab 3: 3 senaryo, L/S/E, skor, bant, S=3 istisnası ve takip.
 - [x] Lab 4: mevcut/hedef, 5 ilke ve bağımsızlık gereksinimi.
 - [x] Lab 5: üç koşul, beş yanıt, telafi edici önlem ve EP 09/10/11 kararı.
+- [x] Lab 6: beş zaman adımı, kanıt koruma, yetkili roller, koşullu CRA bildirim süreleri.
+- [x] Lab 7: üç hata durumu, karar tablosu, bağımsız emniyet ve eşik için kanıt ihtiyacı.
 - [x] Kaynak, varsayım, öneri ve bilgi eksikleri ayrıldı.
 - [x] SWOT/SMART, mevzuat boşluğu ve Trello iş akışı hazırlandı.
 - [ ] Kimlik alanları öğrenci tarafından tamamlandı.
 - [ ] Kör test oturumu uygulandı.
-- [ ] Lab 6-7 üretildi ve nihai yedi haftalık denetim yapıldı.
+- [x] Yedi laboratuvarın belge kapsamı, kaynak/varsayım ayrımı ve tutarlılığı kontrol edildi.
 
-İlk beş hafta tamamlandıktan sonraki tek çalışma adımı: kimlikleri doldurup kör masa başı oturumunu başlatmak. Lab 6-7 ayrı aşamada ele alınır.
+Yedi haftalık belge setinden sonraki tek çalışma adımı: kimlikleri tamamlayıp öğrenci incelemesini yapmak. Kör test oturumu planı hazır; sonuç anahtarı gösterilmeden ayrı oturumda uygulanacak.

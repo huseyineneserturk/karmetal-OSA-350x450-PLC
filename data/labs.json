@@ -142,6 +142,66 @@
       ],
       "refs": ["F1", "K1", "K5", "K8", "K9"],
       "note": "SBOM: yazılım malzeme listesi. Yukarıdaki tablo tam SBOM değildir. Ağ taraması ve gerçek sisteme müdahale yapılmadı."
+    },
+    {
+      "id": 6,
+      "date": "06.11.2026",
+      "filename": "Lab6_CRA_Incident_Simulation.pdf",
+      "title": "CRA Incident Simulation",
+      "output": "Incident Workflow",
+      "ep": "EP 13 - Incident Response",
+      "source_page": 7,
+      "context": "[V] Saat 10:15: servis hesabında yetkisiz erişim alarmı; PLC ayarları değişmiş olabilir, makine çalışıyor [F1]. [B] Gerçek servis hesabı/ağı bilinmiyor. Bu, olay tespiti değil, masa başı müdahale planıdır.",
+      "sections": [
+        {"heading": "Görev - beş aşamalı zaman çizgisi [Ö]", "qa": [
+          ["1. 10:15-10:30 / ilk 15 dakika: kim aranır, ilk üç eylem?", "Vardiya sorumlusu bakım/emniyet yetkilisini ve OT olay sorumlusunu bilgilendirir. (1) İnsanları tehlike alanından uzaklaştır; emniyet gösterilemiyorsa yetkili ekip kontrollü güvenli duruş ve yük tutmayı sağlar. (2) Şüpheli servis oturumunu güvenli biçimde sınırla. (3) Alarmı, saati ve ilk gözlemleri kaydet; rutin reset/yeniden başlatma yapma. Önce insan emniyeti [K5]."],
+          ["2. İlk 2 saat: emniyet, kanıt ve hangi hesap?", "Bakım yetkilisi kapak/şerit duruşu, reset ve konfigürasyon bütünlüğünü onaylı referansla inceler; üretimde tehlikeli deneme yapmaz. OT sorumlusu şüpheli servis hesabını askıya alır, açık oturum ve varsa erişim anahtarlarını iptal eder. Mevcut erişim/PLC/HMI kayıtlarını ve ayar kopyalarını salt okunur saklar; hash, saat dilimi, kopyalayan kişi ve teslim zincirini kaydeder. Kanıt toplama emniyeti geciktirmez."],
+          ["3. En geç 24 saat: erken uyarıda ne hazır olmalı?", "Üreticinin yetkili olay/uyum ekibi kapsamı ve bildirim eşiğini değerlendirir. Kapsam ve eşik sağlanırsa gecikmeden, en geç farkındalıktan 24 saatte erken uyarı: ürün, farkındalık zamanı, kötü niyet şüphesi ve bilinen ilgili AB ülkeleri. Eksik ayrıntı kesinleşene kadar beklenmez. İşletme kanıtı üreticiye aktarır; öğrenci resmî bildirim yapmaz [K10, K11]."],
+          ["4. En geç 72 saat: etki, kök neden ve görev dağılımı?", "OT ekibi erişim ve değişiklik izini; bakım/emniyet ekibi fiziksel etkiyi ve duruş durumunu araştırır. Üretici bildirim sorumlusu ilk etki değerlendirmesini, ürün bilgisini, alınan/önerilen önlemleri sunar. Kök neden henüz kanıtlanmadıysa açıkça belirsiz yazılır; 72 saatin dolması beklenmez. SRP üzerinden ilgili koordinatör CSIRT ve ENISA akışı izlenir [K10, K11]."],
+          ["5. 14. gün: rapor ve korunacak kayıtlar?", "Föydeki 14. gün bu çalışmada ara değerlendirmedir; her olayın yasal son rapor tarihi değildir. Erişim/oturum izleri, varsa PLC/HMI kayıtları, önce-sonra ayarlar, hash'ler, olay çizelgesi, onaylar ve geri dönüş/validasyon sonuçları korunur. Rapor; doğrulanmış neden, fiziksel/üretim etkisi, önlemler ve açık işleri ayırır. Kayıtların var olduğu varsayılmaz; eksikliği yazılır."]
+        ]},
+        {"heading": "CRA süreleri - olay türünü ayır [K10, K11]", "table": {
+          "widths": [0.32, 0.68],
+          "headers": ["Bildirim türü", "Nihai rapor için üst süre"],
+          "rows": [
+            ["Aktif istismar edilen zafiyet", "Düzeltici veya azaltıcı önlem kullanılabilir olduktan sonra en geç 14 gün."],
+            ["Ürün güvenliğini etkileyen ciddi olay", "72 saatlik olay bildiriminin sunulmasından sonra bir ay içinde."]
+          ]
+        }},
+        {"heading": "Koşullu kapsam ve yeniden başlatma kararı", "paragraph": "[B] AB piyasası/ürün kapsamı ve bildirim eşiği doğrulanmadı; her erişim alarmı otomatik CRA bildirimi değildir. 24/72 saat üreticinin ilgili olay/zafiyetten haberdar oluşundan sayılır; 10:15 alarmı ile aynı an olduğu varsayılmaz. Madde 14, 11.09.2026'dan uygulanır [K11]. [Ö] Bağımsız emniyet, onaylı ayarlar ve yetkiler doğrulanıp yetkili işletme ekibi yazılı onay vermeden yeniden başlatma yok."}
+      ],
+      "refs": ["F1", "K5", "K10", "K11"],
+      "note": "EP 13: müdahale akışı ve kanıt listesi hazırdır; gerçek olay, resmî bildirim veya uygulanmış müdahale yoktur."
+    },
+    {
+      "id": 7,
+      "date": "06.11.2026",
+      "filename": "Lab7_AI_Safety_Challenge.pdf",
+      "title": "AI Safety Challenge",
+      "output": "AI Fail-Safe Decision",
+      "ep": "EP 03 + EP 15",
+      "source_page": 8,
+      "context": "[B] K1'de YZ/kamera sistemi doğrulanmıyor. [V] Kesilecek malzemeyi kamerayla OK/RED sınıflandıran yardımcı YZ eklendiğini varsayıyoruz. Mevcut makine özelliği değildir; YZ tahmini emniyet garantisi vermez [F1].",
+      "sections": [
+        {"heading": "Görev - üç başarısızlıkta güvenli davranış", "qa": [
+          ["1. Model kusurlu malzemeye OK verdi: ne yapılır?", "[V] Eğri/uygunsuz malzemeyi kabul etmek, hatalı bağlama koşuluyla birleşirse şerit sıkışmasına veya parça fırlamasına yol açabilir. [Ö] OK tek başına kesim başlatmaz; yerel operatör ve bağımsız ölçü/bağlama kontrolü gerekir. Şüphede sonraki çevrim engellenir, hareket varsa doğrulanmış duruş uygulanır. Kör örneklem kontrolü ve hatalı OK takibi yapılır; yüksek güvenli tahmin de yanlış olabilir."],
+          ["2. Kamera girdisi bozuk/sahte: nasıl fark edilir, ne yapılır?", "[Ö] Kaynak kimliği/bütünlüğü, kare zaman damgası ve sıra bilgisi, donmuş görüntü, bulanıklık ve bağımsız sensör tutarlılığı izlenir. Geçersiz veya eski karede YZ önerisi reddedilir, alarm ve kanıt kaydı üretilir; güvenli bekleme ve yerel inceleme gerekir. Bu kontroller tüm manipülasyonları yakalama garantisi vermez. Kayıtlı eski OK sonucu kullanılmaz."],
+          ["3. Confidence düştü: eşik ve eşik altı davranış?", "[Ö] Güven eşiği tau, temsilî doğrulama verisinde hatalı OK oranı ve fiziksel risk dikkate alınarak belirlenmeli; model skoru tek başına doğruluk olasılığı sayılmaz. [B] Veri/kalibrasyon olmadığı için sayısal eşik atanmadı; belirlenene kadar otomatik kabul kapalı. Eşik altında, eksik/geçersiz skorda veya dağılım dışı girdide çevrim izni verilmez; alarm, yerel insan incelemesi ve doğrulanmış fallback uygulanır [K12]."]
+        ]},
+        {"heading": "Karar tablosu - AI Fail-Safe Decision [Ö]", "table": {
+          "widths": [0.25, 0.49, 0.26],
+          "headers": ["Başarısızlık", "Tanımlanan güvenli davranış", "Kavram"],
+          "rows": [
+            ["Yanlış OK", "Bağımsız kontrol ve yerel onay; tehlikeli çevrimi engelle.", "Human override / monitoring"],
+            ["Manipüle girdi", "Geçersiz öneriyi reddet; güvenli bekle, incele ve kaydet.", "Fail-safe / monitoring"],
+            ["Düşük confidence", "Otomatik kabul yok; yerel incelemeye geç. Son OK'yi kullanma.", "Confidence threshold / fallback"]
+          ]
+        }},
+        {"heading": "Bağımsız emniyet ve kabul ölçütü", "paragraph": "[Ö] YZ/iletişim arızası; kapak/şerit duruşunu, yük tutmayı veya yerel yeniden başlatma şartını devre dışı bırakamamalı. Human override yalnız YZ önerisini iptal eder; emniyet kilidini aşmaz. Fallback, YZ'siz ve risk değerlendirmesiyle doğrulanmış yerel işletimdir; bu koşul yoksa güvenli bekleme sürer. Üç hata sınıfı, yüksek güvenli yanlış OK ve YZ kapalı durumu ayrı test edilmeden kullanım onayı verilmez [K5, K12]."},
+        {"heading": "EP 03 + EP 15 - kaydedilecek kanıt", "paragraph": "[Ö] Model/veri sürümü, girdi zamanı ve bütünlük sonucu, skor/eşik, karar ve gerekçesi, yerel onay, emniyet tepkisi ve test sonucu kaydedilir. Eşik ve algılama süreleri ölçümle doğrulanacak açık gereksinimlerdir. Durum: kavramsal karar tablosu hazır; model geliştirme, performans ölçümü ve gerçek makine testi yapılmadı."}
+      ],
+      "refs": ["F1", "K1", "K5", "K12"],
+      "note": "Öneri, NIST AI RMF rehberindeki güvenli hata/izleme yaklaşımıyla ilişkilidir; emniyet sertifikası iddiası içermez."
     }
   ]
 }
